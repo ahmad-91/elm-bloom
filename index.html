@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#aa6667">
+<title>وش شخصيتك في موسم ELM BLOOM؟</title>
+<meta name="description" content="ستة أسئلة عن الورد، وتنكشف شخصيتك في موسم ELM BLOOM.">
+<meta property="og:title" content="وش شخصيتك في موسم ELM BLOOM؟">
+<meta property="og:description" content="ستة أسئلة عن الورد، وتنكشف شخصيتك.">
+<meta property="og:locale" content="ar_SA">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23aa6667'/%3E%3Cg fill='%23ca9e9d'%3E%3Cellipse cx='16' cy='9' rx='4.6' ry='6'/%3E%3Cellipse cx='16' cy='23' rx='4.6' ry='6'/%3E%3Cellipse cx='9' cy='16' rx='6' ry='4.6'/%3E%3Cellipse cx='23' cy='16' rx='6' ry='4.6'/%3E%3C/g%3E%3C/svg%3E">
+<!--@FALLBACK-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
+<!--/@FALLBACK-->
+<style>
+/*@FONTS*/
+:root{
+  color-scheme:light;
+  /* ELM BLOOM 2026. سطحان فقط: وردي غامق تحمله عناصر وردية فاتحة، وأبيض يُكتب عليه بالوردي الغامق */
+  --rose:#aa6667; --blush:#ca9e9d; --white:#ffffff;
+  --tint:#f5eceb; /* صبغة فاتحة من الوردي الفاتح لخلفيات الخيارات */
+  --olive:#59553b; --khaki:#b9ae6f; --moss:#7f7d54; /* ثانوية، غير مستخدمة في الواجهة */
+  --sans:"Thmanyah Sans","IBM Plex Sans Arabic",Tahoma,system-ui,sans-serif;
+  --display:"Thmanyah Serif Display",Georgia,serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--rose)}
+html,body{margin:0;min-height:100%}
+body{color:var(--rose);font-family:var(--sans);font-size:17px;line-height:1.7;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+h1,h2,p{margin:0}
+h1,h2{line-height:1.3;text-wrap:balance;font-weight:700}
+button{font:inherit;color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.app{position:relative;max-width:480px;margin:0 auto;padding:22px 20px 40px;min-height:100svh;display:flex;flex-direction:column;gap:26px;isolation:isolate}
+/* مصدر رسم وردة زاوية النتيجة فقط، وما تظهر في خلفية الصفحة */
+.bg-flower{display:none}
+
+/* الرأس: الشعار والشعار اللفظي بالوردي الفاتح على الوردي الغامق، كما في الدليل */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:block;width:118px;color:var(--blush);background:none;border:0;padding:0;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.brand svg{display:block;width:100%;height:auto}
+.tag{direction:ltr;font-family:var(--display);font-size:13px;font-weight:400;letter-spacing:.06em;line-height:1.25;color:var(--blush);text-align:left;text-transform:uppercase}
+
+.screen{display:grid;gap:18px;align-content:start}
+.focus-target:focus{outline:none}
+:focus-visible{outline:3px solid var(--white);outline-offset:3px}
+.card :focus-visible{outline-color:var(--rose)}
+
+/* الورقة البيضاء: كل ما يُقرأ يُكتب هنا بالوردي الغامق */
+.card{position:relative;overflow:hidden;background:var(--white);color:var(--rose);border-radius:22px;padding:26px 22px}
+
+/* البداية */
+.hero{display:grid;justify-items:center;text-align:center;gap:10px;padding:16px 0 4px;color:var(--blush)}
+.hero .icon{width:84px}
+.hero .icon svg{display:block;width:100%;height:auto}
+.slogan{font-family:var(--display);font-size:16px;font-weight:400;letter-spacing:.02em}
+.intro-card{display:grid;gap:14px}
+.intro-card h1{font-size:34px}
+.intro-card p{font-size:17px;line-height:1.8}
+.primary{justify-self:stretch;margin-top:4px;font-size:19px;font-weight:700;padding:16px 22px;border:0;border-radius:16px;background:var(--rose);color:var(--white);cursor:pointer;transition:transform .15s,background .15s}
+.primary:active{transform:scale(.985)}
+
+/* الأسئلة. مؤشر التقدم من نقشة الموسم: بتلة، دائرة، بتلة */
+.quiz-card{display:grid;gap:20px}
+.progress{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pattern{display:flex;align-items:center;gap:9px}
+.pattern i{display:block;color:var(--blush);opacity:.4;transition:opacity .3s,color .3s}
+.pattern i.on{opacity:1;color:var(--rose)}
+.pattern i.p{width:18px;height:18px}
+.pattern i.d{width:12px;height:12px;border-radius:50%;background:currentColor}
+.pattern svg{display:block;width:100%;height:100%}
+.count{font-size:14px;font-weight:700;color:var(--blush);font-variant-numeric:tabular-nums}
+h2.q{font-size:25px}
+.options{display:grid;gap:10px}
+.opt{text-align:right;font-size:17px;font-weight:500;line-height:1.55;padding:15px 18px;border:1.5px solid var(--tint);border-radius:16px;background:var(--tint);color:var(--rose);cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .15s}
+.opt:hover{border-color:var(--blush)}
+.opt:active{transform:scale(.99)}
+.opt.picked{background:var(--rose);border-color:var(--rose);color:var(--white);font-weight:700}
+.back{justify-self:start;font-size:15px;font-weight:500;color:var(--blush);background:none;border:0;padding:4px 0;cursor:pointer}
+.back:disabled{visibility:hidden}
+
+/* النتيجة: بطاقة واحدة لكل الشخصيات */
+.result{display:grid;gap:10px;padding-bottom:22px}
+.result .deco{position:absolute;width:200px;inset-inline-end:-50px;top:-40px;color:var(--blush);opacity:.55;pointer-events:none}
+.result .deco svg{display:block;width:100%;height:auto}
+.kicker{font-family:var(--display);font-size:15px;color:var(--blush)}
+.result .emoji{font-size:44px;line-height:1;justify-self:start}
+.result h1{font-size:38px}
+.result p{font-size:18px;font-weight:500;line-height:1.8}
+.booth{display:grid;gap:2px;margin-top:10px;padding:16px 18px;border-radius:16px;background:var(--rose);color:var(--white)}
+.booth b{font-size:18px;font-weight:700}
+.booth span{font-size:14px;opacity:.95}
+.sponsor{display:grid;justify-items:center;gap:10px;padding:20px 20px 18px;text-align:center}
+.sponsor small{font-family:var(--display);font-size:13px;letter-spacing:.04em;color:var(--blush)}
+.sponsor img{display:block;width:170px;height:auto}
+.sponsor p{font-size:16px;font-weight:700;color:#1d1a9c}
+
+.shift-in .result{animation:rise .55s cubic-bezier(.3,1.2,.5,1) both}
+.shift-in .result .emoji{animation:bloom .6s .2s cubic-bezier(.3,1.4,.5,1) both}
+.shift-in .sponsor{animation:rise .5s .35s ease-out both}
+@keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+@keyframes bloom{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="bg-flower" aria-hidden="true"><svg viewBox="283 352 464 417" fill="none" stroke="currentColor" stroke-width="7.7" stroke-linecap="round" stroke-linejoin="round"><path transform="matrix(1 0 0 -1 513.1158 481.2956)" d="M0 0C-2.588 8.24-13.55 12.53-21.044 8.236-28.538 3.942-30.38-7.684-24.58-14.084-32.485-13.612-40.598-18.157-43.866-25.371-47.135-32.584-44.984-42-38.61-46.698-32.235-51.397-22.229-50.449-17.196-44.335-18.114-49.075-18.925-54.395-16.212-58.389-13.582-62.264-8.446-63.557-3.763-63.617 2.909-63.702 9.843-61.717 14.579-57.015 19.314-52.313 21.308-44.617 18.291-38.664 22.229-44.205 29.834-46.924 36.324-44.902 42.815-42.881 47.573-36.139 47.068-29.36 46.564-22.581 40.672-16.542 33.888-16.1 38.017-14.958 40.55-10.307 40.1-6.047 39.65-1.786 36.737 1.924 33.139 4.25 24.588 9.78 11.906 7.473 5.849-.715 5.348-1.393 4.867-2.192 5.002-3.025 5.141-3.884 5.891-4.502 6.634-4.954 13.042-8.854 22.838-6.983 27.061-13.183 29.309-16.482 28.894-21.078 26.906-24.54 24.918-28.002 21.614-30.507 18.193-32.562 9.548-37.756-.447-40.678-10.528-40.958-14.653-41.073-19.131-40.615-22.192-37.847-27.517-33.030-25.354-23.523-19.679-19.122-14.004-14.721-6.321-14.125 .86-14.123 4.482-14.121 8.301-14.281 11.375-16.195 14.45-18.109 16.352-22.381 14.486-25.485"/><path transform="matrix(1 0 0 -1 602.8638 395.87928)" d="M0 0C30.667 2.869 64.112-7.324 81.578-33.188 85.131-38.449 87.711-44.421 88.18-50.752 89.607-70.017 74.309-77.902 59.896-81.568 25.093-90.421-15.926-83.88-43.128-107.327-32.357-103.62-21.586-99.914-10.815-96.207 3.548-91.265 18.047-86.291 33.134-84.516 64.689-80.805 97.683-92.151 120.281-114.486 127.33-121.453 133.618-129.927 134.855-139.76 136.166-150.17 131.648-160.688 133.121-171.076 133.771-175.652 135.575-180.233 134.653-184.763 133.71-189.399 130.081-193.013 126.45-195.994 115.531-204.958 102.54-211.088 88.735-214.086 54.627-221.491 16.624-220.024-14.762-203.613-40.129-190.348-60.668-166.605-66.506-138.581-66.741-137.449-66.95-136.254-66.589-135.156-65.162-130.815-58.492-133.236-55.448-136.643-45.694-147.561-40.103-161.476-34.699-175.083-22.994-204.559-11.074-236.175-17.584-267.215-20.889-282.977-28.762-297.347-36.535-311.452-49.482-334.947-66.583-361.287-93.31-363.605-110.21-365.07-126.123-356.11-140.293-346.783-160.39-333.555-180.598-317.59-188.501-294.865-199.253-263.952-184.205-230.234-166.458-202.734-156.614-187.481-145.824-172.839-134.17-158.921-128.16-151.742-115.255-142.68-105.96-143.806-127.125-174.67-155.593-205.431-180.973-232.933-188.557-241.152-196.465-249.324-206.179-254.863-220.618-263.098-237.916-264.843-254.513-263.928-263.283-263.445-272.16-262.231-280.171-258.627-298.085-250.567-309.199-231.036-310.486-211.434-311.774-191.832-304.39-172.428-293.371-156.164-261.116-108.552-189.777-88.067-135.448-107.243-134.487-107.582-134.536-109.04-135.524-109.289-158.628-115.126-188.218-112.89-210.027-104.38-222.331-99.578-234.1-92.266-241.516-81.337-248.932-70.407-251.227-55.408-244.868-43.832-242.621-39.741-239.421-36.219-237.31-32.056-231.148-19.902-235.301-4.852-230.914 8.049-224.667 26.418-203.077 34.981-183.682 35.481-156.627 36.179-129.279 25.138-111.02 5.161-100.989-5.814-93.892-19.412-90.41-33.854-88.182-43.094-83.413-69.801-92.861-76.151-103.674-64.998-69.404-31.458-61.459-25.089-43.976-11.076-22.334-2.089 0 0Z"/></svg></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="petals" viewBox="347 374 319 319"><path transform="matrix(1 0 0 -1 514.4963 533.0822)" d="M0 0C6.495-6.474 12.99-12.949 19.484-19.423L25.863-24.973 43.277-41.17C48.717-44.836 53.777-48.363 60.328-50.752 84.647-59.617 113.44-54.377 126.421-36.003 134.209-24.978 135.598-13.702 148.751-1.843 150.086-.64 150.57 .467 149.114 1.762 141.046 8.939 136.786 16.512 132.666 25.339 128.767 33.692 125.644 39.322 117 45.645 109.444 51.172 99.629 54.319 88.936 54.944 80.633 55.43 72.272 54.681 64.503 52.254 55.569 49.464 47.489 45.261 41.467 39.6L24.701 23.836C16.467 15.891 8.233 7.945 0 0"/><path transform="matrix(1 0 0 -1 497.6271 533.0822)" d="M0 0C-6.495-6.474-12.99-12.949-19.484-19.423L-25.863-24.973-43.277-41.17C-48.717-44.836-53.777-48.363-60.328-50.752-84.647-59.617-113.44-54.377-126.421-36.003-134.209-24.978-135.598-13.702-148.751-1.843-150.086-.64-150.57 .467-149.114 1.762-141.046 8.939-136.786 16.512-132.666 25.339-128.767 33.692-125.644 39.322-117 45.645-109.444 51.172-99.629 54.319-88.936 54.944-80.633 55.43-72.272 54.681-64.503 52.254-55.569 49.464-47.489 45.261-41.467 39.6L-24.701 23.836C-16.467 15.891-8.233 7.945 0 0"/><path transform="matrix(1 0 0 -1 506.1231 524.5863)" d="M0 0C6.474 6.495 12.949 12.99 19.423 19.484L24.973 25.863 41.17 43.277C44.836 48.717 48.363 53.777 50.751 60.328 59.617 84.647 54.377 113.44 36.003 126.421 24.978 134.209 13.702 135.598 1.843 148.751 .64 150.086-.467 150.57-1.762 149.114-8.939 141.046-16.512 136.786-25.339 132.666-33.692 128.767-39.322 125.644-45.645 117-51.172 109.444-54.319 99.629-54.944 88.936-55.43 80.633-54.681 72.272-52.254 64.503-49.464 55.569-45.261 47.489-39.6 41.467L-23.837 24.701C-15.891 16.467-7.945 8.233 0 0"/><path transform="matrix(1 0 0 -1 506.1231 541.4554)" d="M0 0C6.474-6.495 12.949-12.99 19.423-19.484L24.973-25.863 41.17-43.277C44.836-48.717 48.363-53.777 50.751-60.328 59.617-84.647 54.377-113.44 36.003-126.421 24.978-134.209 13.702-135.598 1.843-148.751 .64-150.086-.467-150.57-1.762-149.114-8.939-141.046-16.512-136.786-25.339-132.666-33.692-128.767-39.322-125.644-45.645-117-51.172-109.444-54.319-99.629-54.944-88.936-55.43-80.633-54.681-72.272-52.254-64.503-49.464-55.569-45.261-47.489-39.6-41.467L-23.837-24.701C-15.891-16.467-7.945-8.233 0 0"/></symbol>
+</svg>
+
+<div class="app">
+  <header class="top">
+    <button class="brand" id="brand" type="button" tabindex="-1" aria-hidden="true">
+      <svg viewBox="924 556 588 184" fill="currentColor"><path transform="matrix(1 0 0 -1 1019.0687 649.3279)" d="M0 0C3.59-3.579 7.181-7.158 10.771-10.738L14.298-13.806 23.924-22.759C26.932-24.786 29.729-26.736 33.35-28.056 46.794-32.958 62.712-30.06 69.888-19.903 74.193-13.808 74.961-7.575 82.233-1.019 82.971-.354 83.238 .258 82.433 .974 77.973 4.941 75.618 9.128 73.34 14.008 71.185 18.626 69.458 21.738 64.68 25.233 60.503 28.289 55.077 30.028 49.166 30.374 44.575 30.643 39.953 30.229 35.658 28.887 30.719 27.345 26.253 25.021 22.924 21.892L13.655 13.177C9.103 8.785 4.552 4.392 0 0"/><path transform="matrix(1 0 0 -1 1009.7432 649.3279)" d="M0 0C-3.59-3.579-7.181-7.158-10.771-10.738L-14.298-13.806-23.924-22.759C-26.932-24.786-29.729-26.736-33.35-28.056-46.794-32.958-62.712-30.06-69.888-19.903-74.193-13.808-74.961-7.575-82.233-1.019-82.971-.354-83.238 .258-82.433 .974-77.973 4.941-75.618 9.128-73.34 14.008-71.185 18.626-69.458 21.738-64.68 25.233-60.503 28.289-55.077 30.028-49.166 30.374-44.575 30.643-39.953 30.229-35.658 28.887-30.72 27.345-26.253 25.021-22.924 21.892L-13.655 13.177C-9.103 8.785-4.552 4.392 0 0"/><path transform="matrix(1 0 0 -1 1014.4399 644.6312)" d="M0 0C3.579 3.59 7.158 7.181 10.738 10.771L13.805 14.298 22.759 23.924C24.786 26.932 26.736 29.729 28.056 33.35 32.958 46.794 30.06 62.712 19.903 69.888 13.808 74.193 7.575 74.961 1.019 82.233 .354 82.971-.258 83.238-.974 82.433-4.941 77.973-9.128 75.618-14.008 73.34-18.626 71.185-21.738 69.458-25.233 64.68-28.289 60.503-30.028 55.077-30.374 49.166-30.643 44.575-30.229 39.953-28.887 35.658-27.345 30.72-25.021 26.253-21.892 22.924L-13.177 13.655C-8.785 9.103-4.392 4.552 0 0"/><path transform="matrix(1 0 0 -1 1014.4399 653.95669)" d="M0 0C3.579-3.59 7.158-7.181 10.738-10.771L13.805-14.298 22.759-23.924C24.786-26.932 26.736-29.729 28.056-33.35 32.958-46.794 30.06-62.712 19.903-69.888 13.808-74.193 7.575-74.961 1.019-82.233 .354-82.971-.258-83.238-.974-82.433-4.941-77.973-9.128-75.618-14.008-73.34-18.626-71.185-21.738-69.458-25.233-64.68-28.289-60.503-30.028-55.077-30.374-49.166-30.643-44.575-30.229-39.953-28.887-35.658-27.345-30.72-25.021-26.253-21.892-22.924L-13.177-13.655C-8.785-9.103-4.392-4.552 0 0"/><path transform="matrix(107.0777 0 0 -107.0777 1116.1738 638.39456)" d="M.05999756 0H.5519867V.07398987H.14099121V.328125H.5019989V.40011598H.14099121V.631073H.5419922V.7050781H.05999756V0Z"/><path transform="matrix(107.0777 0 0 -107.0777 1177.9577 638.39456)" d="M.05999756 0H.5039978V.07398987H.14299011V.7050781H.05999756V0Z"/><path transform="matrix(107.0777 0 0 -107.0777 1232.9956 638.39456)" d="M.05999756 0H.14299011V.5840759H.14498902L.3939972 0H.48199464L.73098757 .58506777H.73298647V0H.81599429V.7050781H.69599917L.43899537 .09098816H.43798829L.17999268 .7050781H.05999756V0Z"/><path transform="matrix(107.0777 0 0 -107.0777 1116.1738 728.661)" d="M.067993167 0H.3849945C.5339966 0 .62098696 .07299805 .62098696 .19502259 .62098696 .28404237 .57299807 .34506227 .4909973 .36305238V.36505128C.56199648 .38404847 .60398867 .44104005 .60398867 .5189972 .60398867 .6399536 .5209961 .70996096 .37998963 .70996096H.067993167V0M.21398926 .4140625V.59794619H.35798646C.42199708 .59794619 .45999146 .5639801 .45999146 .50601199 .45999146 .44804383 .42199708 .4140625 .35798646 .4140625H.21398926M.21398926 .11199951V.3100586H.35798646C.43199159 .3100586 .47599793 .27304078 .47599793 .21102906 .47599793 .14900208 .43199159 .11199951 .35798646 .11199951H.21398926Z"/><path transform="matrix(107.0777 0 0 -107.0777 1187.0593 728.661)" d="M.067993167 0H.47999574V.125H.21398926V.70996096H.067993167V0Z"/><path transform="matrix(107.0777 0 0 -107.0777 1241.4548 728.661)" d="M.39898683-.022460938C.6119995-.022460938 .7519989 .12757874 .7519989 .3549652 .7519989 .583374 .6119995 .7324219 .39898683 .7324219 .18499756 .7324219 .04499817 .583374 .04499817 .3549652 .04499817 .12657166 .18499756-.022460938 .39898683-.022460938M.39898683 .10253906C.272995 .10253906 .19099427 .20271302 .19099427 .3549652 .19099427 .50723269 .272995 .6074066 .39898683 .6074066 .5249939 .6074066 .6069946 .50723269 .6069946 .3549652 .6069946 .20271302 .5249939 .10253906 .39898683 .10253906Z"/><path transform="matrix(107.0777 0 0 -107.0777 1326.9028 728.661)" d="M.39898683-.022460938C.6119995-.022460938 .7519989 .12757874 .7519989 .3549652 .7519989 .583374 .6119995 .7324219 .39898683 .7324219 .18499756 .7324219 .04499817 .583374 .04499817 .3549652 .04499817 .12657166 .18499756-.022460938 .39898683-.022460938M.39898683 .10253906C.272995 .10253906 .19099427 .20271302 .19099427 .3549652 .19099427 .50723269 .272995 .6074066 .39898683 .6074066 .5249939 .6074066 .6069946 .50723269 .6069946 .3549652 .6069946 .20271302 .5249939 .10253906 .39898683 .10253906Z"/><path transform="matrix(107.0777 0 0 -107.0777 1412.3508 728.661)" d="M.067993167 0H.20498657V.5209503H.20698548L.3919983 0H.519989L.7049866 .5209503H.70700076V0H.84399417V.70996096H.6459961L.45700074 .1659851H.45599366L.2659912 .70996096H.067993167V0Z"/></svg>
+    </button>
+    <span class="sr">ELM BLOOM</span>
+    <span class="tag">A FLORAL<br>EXPERIENCE</span>
+  </header>
+
+  <main>
+    <section class="screen" id="sIntro">
+      <div class="hero">
+        <i class="icon" aria-hidden="true"><svg viewBox="347 374 319 319" fill="currentColor" data-petals></svg></i>
+        <span class="slogan">تزهر اللحظات الحلوة</span>
+      </div>
+      <div class="card intro-card">
+        <h1>وش شخصيتك في موسم الورد؟</h1>
+        <p>اللي ما ينقال، يقوله الورد.</p>
+        <button class="primary" id="startBtn" type="button">ابدئي</button>
+      </div>
+    </section>
+
+    <section class="screen" id="sQuiz" hidden>
+      <div class="card quiz-card">
+        <div class="progress">
+          <div class="pattern" id="patternBar" aria-hidden="true"></div>
+          <span class="count" aria-hidden="true"><span id="qNum">١</span> / <span id="qTot">٦</span></span>
+        </div>
+        <p class="sr" id="qLive" aria-live="polite"></p>
+        <h2 class="q focus-target" id="qText" tabindex="-1"></h2>
+        <div class="options" id="qOpts"></div>
+        <button class="back" id="backBtn" type="button">→ السؤال السابق</button>
+      </div>
+    </section>
+
+    <section class="screen" id="sResult" hidden>
+      <div class="card result" id="rCard">
+        <i class="deco" id="rDeco" aria-hidden="true"></i>
+        <span class="kicker">شخصيتك في موسم الورد</span>
+        <span class="emoji" id="rEmoji" aria-hidden="true"></span>
+        <h1 class="focus-target" id="rName" tabindex="-1"></h1>
+        <p id="rDesc"></p>
+        <div class="booth">
+          <b>ورّي هالشاشة لفريق ELM في البوث</b>
+          <span>وخذي هديتك اللي تناسب شخصيتك</span>
+        </div>
+      </div>
+      <aside class="card sponsor" aria-label="الراعي الرسمي">
+        <small>الراعي الرسمي</small>
+        <img src="assets/detail-logo.png" width="640" height="233" alt="ديتيل للحلول التسويقية">
+        <p>ديتيل فريق تحطه على يمناك</p>
+      </aside>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  // A محققة الباقات · B ملكة التلميحات · C رسولة الاعترافات · D حافظة الأسرار · E صانعة المفاجآت · F مدللة نفسها
+  // كل شخصية تظهر في أربعة أسئلة بالضبط، فتكون فرصها متساوية.
+  var QUESTIONS = [
+    {q:"قهوتك وصلت ومعها وردة على الصينية… وش تسوين فيها؟", o:[
+      ["أحطها بين صفحات كتابي، وأنا أعرف ليش.","D"],
+      ["أعطيها اللي جالسة على الطاولة اللي جنبي.","E"],
+      ["أطلب معها حلا، اليوم يومي.","F"],
+      ["أصورها وأرسلها لشخص واحد بدون ولا كلمة.","C"]]},
+    {q:"وصلك بوكيه بدون اسم المرسل… وش أول حركة؟", o:[
+      ["أقارن خط الكرت بخطوط الشلة كلها.","A"],
+      ["أنزله ستوري وأراقب مين يشوفه أول.","B"],
+      ["أطلع أرسل بوكيه لشخص ما يتوقعه.","E"],
+      ["ما يهمني مين، أحطه جنب سريري وأستمتع فيه.","F"]]},
+    {q:"الكرت فاضي والقلم بيدك… وش تكتبين؟", o:[
+      ["«توقّع مين أنا؟ عندك ثلاث محاولات».","A"],
+      ["«ترى عيد ميلادي بعد أسبوعين».","B"],
+      ["«في كلام ما يكفيه كرت».","C"],
+      ["«تذكر؟»","D"]]},
+    {q:"وش أحلى توقيت للورد؟", o:[
+      ["بعد أسبوع كامل من التلميح.","B"],
+      ["اللحظة اللي ما أقدر أقول فيها اللي بخاطري.","C"],
+      ["يوم ثلاثاء عادي، بدون أي سبب.","E"],
+      ["بعد ما أخلص مهمة صعبة، وأنا اللي أشتريه.","F"]]},
+    {q:"اختاري عنوان فيلم عن علاقتك بالورد.", o:[
+      ["القضية: من أرسل البوكيه؟","A"],
+      ["رسالة بين البتلات","C"],
+      ["ما يعرفها غيرنا","D"],
+      ["موعد مع نفسي","F"]]},
+    {q:"وش في جوالك له علاقة بالورد؟", o:[
+      ["سكرين شوت لبوكيه أحد، مكبّرة على الكرت.","A"],
+      ["صور ورد في المفضلة، أرسلها «بالصدفة».","B"],
+      ["صورة وردة قديمة، محد يعرف قصتها.","D"],
+      ["رقم محل ورد محفوظ باسم «طوارئ».","E"]]}
+  ];
+
+  var RESULTS = {
+    A:{name:"محققة الباقات", emoji:"🔍🌹",
+       desc:"ما يمر عليها بوكيه مرور الكرام! تحلل لون الورد، وعدد الورود، ومعنى البطاقة، وتحاول تكتشف الرسالة المخفية وراء كل هدية."},
+    B:{name:"ملكة التلميحات", emoji:"🎀",
+       desc:"ما تطلب الورد بشكل مباشر أبدًا، لكن تعرف كيف توصل الرسالة. صورة، ستوري، أو تعليق عابر… والباقي على الشاطر!"},
+    C:{name:"رسولة الاعترافات", emoji:"💘",
+       desc:"إذا عجزت الكلمات عن التعبير، تخلي الورد يتكلم عنها. تحب الرسائل الرومانسية والهدايا اللي تحمل معاني خفية."},
+    D:{name:"حافظة الأسرار", emoji:"🤫",
+       desc:"عندها قصة وراء كل وردة، وبعض القصص ما يعرفها أحد. تحب المعاني الخفية والرسائل اللي ما يفهمها إلا أصحابها."},
+    E:{name:"صانعة المفاجآت", emoji:"🎁",
+       desc:"تحب تهدي الورد بدون مناسبة، وتستمتع بردة فعل الشخص أكثر من الهدية نفسها. تؤمن أن أجمل اللحظات هي اللي تجي بدون موعد."},
+    F:{name:"مدللة نفسها", emoji:"💐",
+       desc:"ما تنتظر أحد يهديها الورد؛ تشتريه لنفسها وتكافئ نفسها على أبسط إنجاز. تعرف كيف تسعد نفسها بنفسها."}
+  };
+
+  var STORE_KEY = "elm-bloom-2026-result";
+  var RESET_HOLD_MS = 3000;
+  var N = QUESTIONS.length;
+  var AR = "٠١٢٣٤٥٦٧٨٩";
+  var $ = function(id){ return document.getElementById(id); };
+  var ar = function(n){ return String(n).replace(/\d/g, function(d){ return AR[d]; }); };
+
+  $("rDeco").innerHTML = document.querySelector(".bg-flower").innerHTML;
+  var PETALS = document.getElementById("petals").innerHTML;
+  function fillPetals(root){ Array.prototype.forEach.call(root.querySelectorAll("svg[data-petals]"), function(sv){ sv.innerHTML = PETALS; }); }
+  fillPetals(document);
+
+  function shuffled(list){
+    var a = list.slice();
+    for(var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+
+  function load(){ try { return JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch(e){ return null; } }
+  function save(v){ try { localStorage.setItem(STORE_KEY, JSON.stringify(v)); } catch(e){} }
+  function clear(){ try { localStorage.removeItem(STORE_KEY); } catch(e){} }
+
+  var state, busy = false;
+  function fresh(){
+    state = {idx:0, answers:new Array(N), order:QUESTIONS.map(function(Q){ return shuffled(Q.o); })};
+  }
+
+  function show(id){
+    ["sIntro","sQuiz","sResult"].forEach(function(s){ $(s).hidden = (s !== id); });
+    window.scrollTo(0, 0);
+  }
+
+  // نقشة الموسم: بتلة، دائرة، بتلة… عنصر لكل سؤال
+  var bar = $("patternBar");
+  for(var p = 0; p < N; p++){
+    var i = document.createElement("i");
+    if(p % 2 === 0){ i.className = "p"; i.innerHTML = '<svg viewBox="347 374 319 319" fill="currentColor" data-petals></svg>'; }
+    else i.className = "d";
+    bar.appendChild(i);
+  }
+  fillPetals(bar);
+
+  function renderQ(moveFocus){
+    var i = state.idx;
+    $("qNum").textContent = ar(i + 1);
+    $("qTot").textContent = ar(N);
+    Array.prototype.forEach.call(bar.children, function(el, k){ el.classList.toggle("on", k <= i); });
+    $("qText").textContent = QUESTIONS[i].q;
+    $("qLive").textContent = "السؤال " + ar(i + 1) + " من " + ar(N);
+    var box = $("qOpts"); box.innerHTML = "";
+    state.order[i].forEach(function(opt){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opt"; b.textContent = opt[0];
+      if(state.answers[i] === opt[1]) b.classList.add("picked");
+      b.addEventListener("click", function(){ pick(opt[1], b); });
+      box.appendChild(b);
+    });
+    $("backBtn").disabled = (i === 0);
+    if(moveFocus) $("qText").focus();
+  }
+
+  function pick(type, el){
+    if(busy) return;
+    busy = true;
+    state.answers[state.idx] = type;
+    Array.prototype.forEach.call($("qOpts").children, function(c){ c.classList.remove("picked"); });
+    el.classList.add("picked");
+    $("backBtn").disabled = true;
+    setTimeout(function(){
+      busy = false;
+      if(state.idx < N - 1){ state.idx++; renderQ(true); }
+      else finish();
+    }, 260);
+  }
+
+  $("backBtn").addEventListener("click", function(){
+    if(busy || state.idx === 0) return;
+    state.idx--; renderQ(true);
+  });
+
+  function finish(){
+    var count = {};
+    state.answers.forEach(function(t){ count[t] = (count[t] || 0) + 1; });
+    var max = Math.max.apply(null, Object.keys(count).map(function(t){ return count[t]; }));
+    var tied = Object.keys(count).filter(function(t){ return count[t] === max; });
+    var winner = tied[Math.floor(Math.random() * tied.length)];
+    save({t:winner, at:Date.now()});
+    showResult(winner, true);
+  }
+
+  function showResult(type, animate){
+    var R = RESULTS[type];
+    $("rEmoji").textContent = R.emoji;
+    $("rName").textContent = R.name;
+    $("rDesc").textContent = R.desc;
+    var sec = $("sResult");
+    sec.classList.remove("shift-in");
+    if(animate){ void sec.offsetWidth; sec.classList.add("shift-in"); }
+    show("sResult");
+    $("rName").focus();
+  }
+
+  $("startBtn").addEventListener("click", function(){
+    fresh(); show("sQuiz"); renderQ(true);
+  });
+
+  // إعادة التشغيل للفريق فقط: ضغطة مطوّلة على الشعار ثلاث ثوانٍ.
+  var holdTimer = null;
+  function holdStart(e){
+    if($("sResult").hidden) return;
+    e.preventDefault();
+    holdTimer = setTimeout(function(){
+      holdTimer = null;
+      if(window.confirm("تجهيز الاختبار لزائرة جديدة؟")){ clear(); fresh(); show("sIntro"); $("startBtn").focus(); }
+    }, RESET_HOLD_MS);
+  }
+  function holdEnd(){ if(holdTimer){ clearTimeout(holdTimer); holdTimer = null; } }
+  var brand = $("brand");
+  brand.addEventListener("pointerdown", holdStart);
+  ["pointerup","pointerleave","pointercancel"].forEach(function(ev){ brand.addEventListener(ev, holdEnd); });
+  brand.addEventListener("contextmenu", function(e){ e.preventDefault(); });
+
+  var saved = load();
+  if(saved && RESULTS[saved.t]) showResult(saved.t, false);
+  else { fresh(); show("sIntro"); }
+})();
+</script>
+</body>
+</html>

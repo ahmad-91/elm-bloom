@@ -1,0 +1,6 @@
+fonts/
+*.pdf
+/logo (2).png
+/*.png
+.vercel/
+__pycache__/
