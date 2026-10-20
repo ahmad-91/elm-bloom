@@ -69,7 +69,7 @@ def main():
         shutil.rmtree(DIST)
     (DIST / "assets").mkdir(parents=True)
     (DIST / "index.html").write_text(bake("index.html", faces), encoding="utf-8")
-    shutil.copy(ROOT / "assets" / "detail-logo.png", DIST / "assets" / "detail-logo.png")
+    shutil.copy(ROOT / "assets" / "detail-logo-white.png", DIST / "assets" / "detail-logo-white.png")
     (DIST / "admin.html").write_text(bake("admin.html", faces), encoding="utf-8")
     for folder in ("api", "lib"):
         target = DIST / folder
