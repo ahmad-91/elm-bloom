@@ -299,13 +299,36 @@ h2.q{font-size:25px;line-height:1.35}
     state.idx--; renderQ(true);
   });
 
+  function uid(){
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c){
+      var n = Math.random() * 16 | 0;
+      return (c === "x" ? n : (n & 0x3 | 0x8)).toString(16);
+    });
+  }
+
+  function record(id, type){
+    var body = JSON.stringify({ id: id, personality: type });
+    function send(){
+      return fetch("/api/complete", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: body,
+        keepalive: true
+      }).then(function(r){ if(!r.ok) throw new Error("save"); });
+    }
+    send().catch(function(){ setTimeout(function(){ send().catch(function(){}); }, 1500); });
+  }
+
   function finish(){
     var count = {};
     state.answers.forEach(function(t){ count[t] = (count[t] || 0) + 1; });
     var max = Math.max.apply(null, Object.keys(count).map(function(t){ return count[t]; }));
     var tied = Object.keys(count).filter(function(t){ return count[t] === max; });
     var winner = tied[Math.floor(Math.random() * tied.length)];
-    save({t:winner, at:Date.now()});
+    var id = uid();
+    save({t:winner, at:Date.now(), id:id});
+    record(id, winner);
     showResult(winner, true);
   }
 

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#aa6667">
+<title>لوحة المشرف — ELM BLOOM</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23aa6667'/%3E%3Cg fill='%23ca9e9d'%3E%3Cellipse cx='16' cy='9' rx='4.6' ry='6'/%3E%3Cellipse cx='16' cy='23' rx='4.6' ry='6'/%3E%3Cellipse cx='9' cy='16' rx='6' ry='4.6'/%3E%3Cellipse cx='23' cy='16' rx='6' ry='4.6'/%3E%3C/g%3E%3C/svg%3E">
+<!--@FALLBACK-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
+<!--/@FALLBACK-->
+<style>
+/*@FONTS*/
+:root{
+  color-scheme:light;
+  --rose:#aa6667; --blush:#ca9e9d; --white:#fff; --tint:#f5eceb;
+  --sans:"Thmanyah Sans","IBM Plex Sans Arabic",Tahoma,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--rose)}
+html,body{margin:0;min-height:100%}
+body{color:var(--rose);background:var(--rose);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+button,input{font:inherit;color:inherit}
+h1,h2,p{margin:0}
+h1,h2{font-weight:700;line-height:1.25}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--white);outline-offset:3px}
+.sheet :focus-visible,.gate :focus-visible{outline-color:var(--rose)}
+
+.wrap{max-width:1040px;margin:0 auto;padding:22px 20px 48px;display:grid;gap:18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:42px}
+.brand{width:118px;color:var(--blush)}
+.brand svg{display:block;width:100%;height:auto}
+.actions{display:flex;gap:8px}
+.actions button{background:transparent;color:var(--blush);border:1.5px solid rgba(202,158,157,.55);border-radius:999px;padding:8px 16px;font-weight:500}
+.actions button:hover{border-color:var(--blush);color:var(--white)}
+
+#loginView{display:grid;justify-items:center;padding-top:7vh}
+.gate{width:min(420px,100%);background:var(--white);border-radius:22px;padding:28px 24px;display:grid;gap:16px}
+.mark{width:72px;margin:0 auto 14px;color:var(--blush)}
+.mark svg{display:block;width:100%;height:auto}
+.gate h1{font-size:32px}
+.gate p{font-size:16px;font-weight:500}
+.gate label{display:grid;gap:8px;font-weight:700}
+.gate input{border:0;background:var(--tint);border-radius:16px;padding:16px 18px;font-size:17px;font-weight:500}
+.gate .go{border:0;background:var(--rose);color:var(--white);border-radius:16px;padding:16px;font-size:18px;font-weight:700}
+.gate .go:active{transform:scale(.985)}
+.err{font-weight:700}
+
+.sheet{background:var(--white);border-radius:22px;padding:28px 26px 30px;display:grid;gap:28px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:12px}
+.head h1{font-size:34px}
+.head span{font-weight:500}
+
+.figures{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px}
+.fig{background:var(--tint);border-radius:18px;padding:18px 20px 16px;display:grid;gap:4px;align-content:end;min-height:128px}
+.fig span{font-size:15px;font-weight:500}
+.fig strong{font-size:56px;line-height:.95;font-weight:700;font-variant-numeric:tabular-nums}
+.fig.side strong{font-size:44px}
+.lead{font-size:18px;font-weight:500}
+
+.cols{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:start}
+.block{display:grid;gap:16px;align-content:start}
+.block h2{font-size:22px}
+.people{display:grid;gap:14px}
+.person{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.emo{font-size:26px;line-height:1;width:42px;text-align:center}
+.who{display:grid;gap:7px}
+.who .line{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.who b{font-size:16px}
+.who .pct{font-size:13px;font-weight:700}
+.track{height:7px;border-radius:99px;background:var(--tint);overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--rose);border-radius:inherit}
+.person .n{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;min-width:2ch;text-align:left}
+
+.chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.chart-head span{font-size:14px;font-weight:500}
+.chart{display:grid;grid-template-columns:repeat(14,1fr);gap:6px;align-items:end;height:196px}
+.col{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;height:100%;min-width:0}
+.col b{font-size:11px;font-weight:700;line-height:1;min-height:13px}
+.col i{display:block;width:min(100%,16px);border-radius:99px;background:var(--blush);min-height:4px}
+.col.today i{background:var(--rose)}
+.col span{font-size:11px;font-weight:700;line-height:1}
+.col.zero b{visibility:hidden}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@media (max-width:800px){
+  .sheet{padding:22px 16px 24px}
+  .head h1{font-size:28px}
+  .figures{grid-template-columns:1fr 1fr}
+  .fig.main{grid-column:1 / -1;min-height:0}
+  .fig strong{font-size:48px}
+  .cols{grid-template-columns:1fr;gap:26px}
+  .chart{height:168px;gap:4px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand" aria-hidden="true">
+      <svg viewBox="924 556 588 184" fill="currentColor"><path transform="matrix(1 0 0 -1 1019.0687 649.3279)" d="M0 0C3.59-3.579 7.181-7.158 10.771-10.738L14.298-13.806 23.924-22.759C26.932-24.786 29.729-26.736 33.35-28.056 46.794-32.958 62.712-30.06 69.888-19.903 74.193-13.808 74.961-7.575 82.233-1.019 82.971-.354 83.238 .258 82.433 .974 77.973 4.941 75.618 9.128 73.34 14.008 71.185 18.626 69.458 21.738 64.68 25.233 60.503 28.289 55.077 30.028 49.166 30.374 44.575 30.643 39.953 30.229 35.658 28.887 30.719 27.345 26.253 25.021 22.924 21.892L13.655 13.177C9.103 8.785 4.552 4.392 0 0"/><path transform="matrix(1 0 0 -1 1009.7432 649.3279)" d="M0 0C-3.59-3.579-7.181-7.158-10.771-10.738L-14.298-13.806-23.924-22.759C-26.932-24.786-29.729-26.736-33.35-28.056-46.794-32.958-62.712-30.06-69.888-19.903-74.193-13.808-74.961-7.575-82.233-1.019-82.971-.354-83.238 .258-82.433 .974-77.973 4.941-75.618 9.128-73.34 14.008-71.185 18.626-69.458 21.738-64.68 25.233-60.503 28.289-55.077 30.028-49.166 30.374-44.575 30.643-39.953 30.229-35.658 28.887-30.72 27.345-26.253 25.021-22.924 21.892L-13.655 13.177C-9.103 8.785-4.552 4.392 0 0"/><path transform="matrix(1 0 0 -1 1014.4399 644.6312)" d="M0 0C3.579 3.59 7.158 7.181 10.738 10.771L13.805 14.298 22.759 23.924C24.786 26.932 26.736 29.729 28.056 33.35 32.958 46.794 30.06 62.712 19.903 69.888 13.808 74.193 7.575 74.961 1.019 82.233 .354 82.971-.258 83.238-.974 82.433-4.941 77.973-9.128 75.618-14.008 73.34-18.626 71.185-21.738 69.458-25.233 64.68-28.289 60.503-30.028 55.077-30.374 49.166-30.643 44.575-30.229 39.953-28.887 35.658-27.345 30.72-25.021 26.253-21.892 22.924L-13.177 13.655C-8.785 9.103-4.392 4.552 0 0"/><path transform="matrix(1 0 0 -1 1014.4399 653.95669)" d="M0 0C3.579-3.59 7.158-7.181 10.738-10.771L13.805-14.298 22.759-23.924C24.786-26.932 26.736-29.729 28.056-33.35 32.958-46.794 30.06-62.712 19.903-69.888 13.808-74.193 7.575-74.961 1.019-82.233 .354-82.971-.258 83.238-.974 82.433-4.941-77.973-9.128-75.618-14.008-73.34-18.626-71.185-21.738-69.458-25.233-64.68-28.289-60.503-30.028-55.077-30.374-49.166-30.643-44.575-30.229-39.953-28.887-35.658-27.345-30.72-25.021-26.253-21.892-22.924L-13.177-13.655C-8.785-9.103-4.392-4.552 0 0"/><path transform="matrix(107.0777 0 0 -107.0777 1116.1738 638.39456)" d="M.05999756 0H.5519867V.07398987H.14099121V.328125H.5019989V.40011598H.14099121V.631073H.5419922V.7050781H.05999756V0Z"/><path transform="matrix(107.0777 0 0 -107.0777 1177.9577 638.39456)" d="M.05999756 0H.5039978V.07398987H.14299011V.7050781H.05999756V0Z"/><path transform="matrix(107.0777 0 0 -107.0777 1232.9956 638.39456)" d="M.05999756 0H.14299011V.5840759H.14498902L.3939972 0H.48199464L.73098757 .58506777H.73298647V0H.81599429V.7050781H.69599917L.43899537 .09098816H.43798829L.17999268 .7050781H.05999756V0Z"/><path transform="matrix(107.0777 0 0 -107.0777 1116.1738 728.661)" d="M.067993167 0H.3849945C.5339966 0 .62098696 .07299805 .62098696 .19502259 .62098696 .28404237 .57299807 .34506227 .4909973 .36305238V.36505128C.56199648 .38404847 .60398867 .44104005 .60398867 .5189972 .60398867 .6399536 .5209961 .70996096 .37998963 .70996096H.067993167V0M.21398926 .4140625V.59794619H.35798646C.42199708 .59794619 .45999146 .5639801 .45999146 .50601199 .45999146 .44804383 .42199708 .4140625 .35798646 .4140625H.21398926M.21398926 .11199951V.3100586H.35798646C.43199159 .3100586 .47599793 .27304078 .47599793 .21102906 .47599793 .14900208 .43199159 .11199951 .35798646 .11199951H.21398926Z"/><path transform="matrix(107.0777 0 0 -107.0777 1187.0593 728.661)" d="M.067993167 0H.47999574V.125H.21398926V.70996096H.067993167V0Z"/><path transform="matrix(107.0777 0 0 -107.0777 1241.4548 728.661)" d="M.39898683-.022460938C.6119995-.022460938 .7519989 .12757874 .7519989 .3549652 .7519989 .583374 .6119995 .7324219 .39898683 .7324219 .18499756 .7324219 .04499817 .583374 .04499817 .3549652 .04499817 .12657166 .18499756-.022460938 .39898683-.022460938M.39898683 .10253906C.272995 .10253906 .19099427 .20271302 .19099427 .3549652 .19099427 .50723269 .272995 .6074066 .39898683 .6074066 .5249939 .6074066 .6069946 .50723269 .6069946 .3549652 .6069946 .20271302 .5249939 .10253906 .39898683 .10253906Z"/><path transform="matrix(107.0777 0 0 -107.0777 1326.9028 728.661)" d="M.39898683-.022460938C.6119995-.022460938 .7519989 .12757874 .7519989 .3549652 .7519989 .583374 .6119995 .7324219 .39898683 .7324219 .18499756 .7324219 .04499817 .583374 .04499817 .3549652 .04499817 .12657166 .18499756-.022460938 .39898683-.022460938M.39898683 .10253906C.272995 .10253906 .19099427 .20271302 .19099427 .3549652 .19099427 .50723269 .272995 .6074066 .39898683 .6074066 .5249939 .6074066 .6069946 .50723269 .6069946 .3549652 .6069946 .20271302 .5249939 .10253906 .39898683 .10253906Z"/><path transform="matrix(107.0777 0 0 -107.0777 1412.3508 728.661)" d="M.067993167 0H.20498657V.5209503H.20698548L.3919983 0H.519989L.7049866 .5209503H.70700076V0H.84399417V.70996096H.6459961L.45700074 .1659851H.45599366L.2659912 .70996096H.067993167V0Z"/></svg>
+    </div>
+    <span class="sr">ELM BLOOM</span>
+    <div class="actions" id="actions" hidden>
+      <button id="reload" type="button">تحديث</button>
+      <button id="logout" type="button">خروج</button>
+    </div>
+  </header>
+
+  <div id="loginView">
+    <div class="mark" aria-hidden="true"><svg viewBox="347 374 319 319" fill="currentColor"><path transform="matrix(1 0 0 -1 514.4963 533.0822)" d="M0 0C6.495-6.474 12.99-12.949 19.484-19.423L25.863-24.973 43.277-41.17C48.717-44.836 53.777-48.363 60.328-50.752 84.647-59.617 113.44-54.377 126.421-36.003 134.209-24.978 135.598-13.702 148.751-1.843 150.086-.64 150.57 .467 149.114 1.762 141.046 8.939 136.786 16.512 132.666 25.339 128.767 33.692 125.644 39.322 117 45.645 109.444 51.172 99.629 54.319 88.936 54.944 80.633 55.43 72.272 54.681 64.503 52.254 55.569 49.464 47.489 45.261 41.467 39.6L24.701 23.836C16.467 15.891 8.233 7.945 0 0"/><path transform="matrix(1 0 0 -1 497.6271 533.0822)" d="M0 0C-6.495-6.474-12.99-12.949-19.484-19.423L-25.863-24.973-43.277-41.17C-48.717-44.836-53.777-48.363-60.328-50.752-84.647-59.617-113.44-54.377-126.421-36.003-134.209-24.978-135.598-13.702-148.751-1.843-150.086-.64-150.57 .467-149.114 1.762-141.046 8.939-136.786 16.512-132.666 25.339-128.767 33.692-125.644 39.322-117 45.645-109.444 51.172-99.629-54.319-99.629-54.944-88.936-55.43-80.633-54.681-72.272-52.254-64.503-49.464-55.569-45.261-47.489-39.6-41.467L-24.701 23.836C-16.467 15.891-8.233 7.945 0 0"/><path transform="matrix(1 0 0 -1 506.1231 524.5863)" d="M0 0C6.474 6.495 12.949 12.99 19.423 19.484L24.973 25.863 41.17 43.277C44.836 48.717 48.363 53.777 50.751 60.328 59.617 84.647 54.377 113.44 36.003 126.421 24.978 134.209 13.702 135.598 1.843 148.751 .64 150.086-.467 150.57-1.762 149.114-8.939 141.046-16.512 136.786-25.339 132.666-33.692 128.767-39.322 125.644-45.645 117-51.172 109.444-54.319 99.629-54.944 88.936-55.43 80.633-54.681 72.272-52.254 64.503-49.464 55.569-45.261 47.489-39.6 41.467L-23.837 24.701C-15.891 16.467-7.945 8.233 0 0"/><path transform="matrix(1 0 0 -1 506.1231 541.4554)" d="M0 0C6.474-6.495 12.949-12.99 19.423-19.484L24.973-25.863 41.17-43.277C44.836-48.717 48.363-53.777 50.751-60.328 59.617-84.647 54.377-113.44 36.003-126.421 24.978-134.209 13.702-135.598 1.843-148.751 .64-150.086-.467-150.57-1.762-149.114-8.939-141.046-16.512-136.786-25.339-132.666-33.692-128.767-39.322-125.644-45.645-117-51.172-109.444-54.319-99.629-54.944-88.936-55.43-80.633-54.681-72.272-52.254-64.503-49.464-55.569-45.261-47.489-39.6-41.467L-23.837-24.701C-15.891-16.467-7.945-8.233 0 0"/></svg></div>
+    <form class="gate" id="login">
+      <h1>لوحة المشرف</h1>
+      <p>أرقام من خلّصوا الاختبار.</p>
+      <label>كلمة المرور
+        <input id="password" type="password" autocomplete="current-password" required>
+      </label>
+      <p class="err" id="loginErr" hidden>كلمة المرور غير صحيحة.</p>
+      <button class="go" type="submit">دخول</button>
+    </form>
+  </div>
+
+  <section class="sheet" id="board" hidden>
+    <div class="head">
+      <h1>لوحة المشرف</h1>
+      <span id="when"></span>
+    </div>
+    <div class="figures">
+      <article class="fig main">
+        <span>اكتمل</span>
+        <strong id="total">٠</strong>
+      </article>
+      <article class="fig side">
+        <span>اليوم</span>
+        <strong id="today">٠</strong>
+      </article>
+      <article class="fig side">
+        <span>أمس</span>
+        <strong id="yesterday">٠</strong>
+      </article>
+    </div>
+    <p class="lead" id="lead"></p>
+    <div class="cols">
+      <section class="block">
+        <h2>الشخصيات</h2>
+        <div class="people" id="types"></div>
+      </section>
+      <section class="block">
+        <div class="chart-head">
+          <h2>كل يوم</h2>
+          <span>آخر ١٤ يوم</span>
+        </div>
+        <div class="chart" id="chart" aria-hidden="true"></div>
+        <p class="sr" id="chartText"></p>
+      </section>
+    </div>
+    <p class="err" id="boardErr" hidden>ما قدرنا نقرأ الأرقام.</p>
+  </section>
+</div>
+<script>
+(function(){
+  var KEY = "elm-bloom-admin";
+  var AR = "٠١٢٣٤٥٦٧٨٩";
+  var MONTHS = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+  var $ = function(id){ return document.getElementById(id); };
+  function ar(n){ return String(n).replace(/\d/g, function(d){ return AR[d]; }); }
+  function shiftDay(iso, by){
+    var p = iso.split("-").map(Number);
+    var d = new Date(Date.UTC(p[0], p[1] - 1, p[2]));
+    d.setUTCDate(d.getUTCDate() + by);
+    return d.toISOString().slice(0, 10);
+  }
+  function dayNum(iso){ return ar(Number(iso.slice(8))); }
+  function longDate(iso){
+    var p = iso.split("-").map(Number);
+    return ar(p[2]) + " " + MONTHS[p[1] - 1];
+  }
+
+  function showLogin(bad){
+    $("loginView").hidden = false;
+    $("board").hidden = true;
+    $("actions").hidden = true;
+    $("loginErr").hidden = !bad;
+  }
+
+  function render(data){
+    $("loginView").hidden = true;
+    $("board").hidden = false;
+    $("actions").hidden = false;
+    $("boardErr").hidden = true;
+
+    var today = data.days[data.days.length - 1].date;
+    var yIso = shiftDay(today, -1);
+    var yCount = 0;
+    data.days.forEach(function(d){ if(d.date === yIso) yCount = d.count; });
+
+    $("total").textContent = ar(data.total);
+    $("today").textContent = ar(data.today);
+    $("yesterday").textContent = ar(yCount);
+    $("when").textContent = longDate(today);
+
+    var ranked = data.personalities.slice().sort(function(a, b){ return b.count - a.count; });
+    var top = ranked[0];
+    var second = ranked[1] ? ranked[1].count : 0;
+    if(!data.total) $("lead").textContent = "ما فيه نتائج بعد.";
+    else if(top.count === second) $("lead").textContent = "النتائج متقاربة بين الشخصيات.";
+    else $("lead").textContent = top.name + " هي الأعلى، " + ar(top.count) + " من " + ar(data.total);
+
+    var max = Math.max.apply(null, data.personalities.map(function(p){ return p.count; }).concat([1]));
+    $("types").innerHTML = data.personalities.map(function(p){
+      var w = Math.round(p.count / max * 100);
+      var pct = data.total ? Math.round(p.count / data.total * 100) : 0;
+      return '<div class="person"><span class="emo">' + p.emoji + '</span><div class="who"><div class="line"><b>' + p.name + '</b><span class="pct">' + ar(pct) + '٪</span></div><span class="track"><i style="width:' + w + '%"></i></span></div><b class="n">' + ar(p.count) + '</b></div>';
+    }).join("");
+
+    var days = data.days.slice(-14);
+    var maxDay = Math.max.apply(null, days.map(function(d){ return d.count; }).concat([1]));
+    $("chart").innerHTML = days.map(function(d){
+      var h = d.count ? Math.max(12, Math.round(d.count / maxDay * 132)) : 4;
+      var cls = (d.date === today ? " today" : "") + (d.count ? "" : " zero");
+      return '<div class="col' + cls + '"><b>' + ar(d.count) + '</b><i style="height:' + h + 'px"></i><span>' + dayNum(d.date) + '</span></div>';
+    }).join("");
+    $("chartText").textContent = days.map(function(d){
+      var name = d.date === today ? "اليوم" : (d.date === yIso ? "أمس" : longDate(d.date));
+      return name + " " + ar(d.count);
+    }).join("، ");
+  }
+
+  function load(){
+    var password = sessionStorage.getItem(KEY) || "";
+    if(!password){ showLogin(false); return; }
+    fetch("/api/stats", { headers: { authorization: "Bearer " + password }, cache: "no-store" })
+      .then(function(r){
+        if(r.status === 401){ sessionStorage.removeItem(KEY); showLogin(true); return null; }
+        if(!r.ok) throw new Error("stats");
+        return r.json();
+      })
+      .then(function(data){ if(data) render(data); })
+      .catch(function(){
+        $("loginView").hidden = true;
+        $("board").hidden = false;
+        $("actions").hidden = false;
+        $("boardErr").hidden = false;
+      });
+  }
+
+  $("login").addEventListener("submit", function(e){
+    e.preventDefault();
+    sessionStorage.setItem(KEY, $("password").value);
+    $("password").value = "";
+    load();
+  });
+  $("logout").addEventListener("click", function(){
+    sessionStorage.removeItem(KEY);
+    showLogin(false);
+  });
+  $("reload").addEventListener("click", load);
+  load();
+})();
+</script>
+</body>
+</html>

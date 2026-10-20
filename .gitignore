@@ -4,3 +4,7 @@ fonts/
 /*.png
 .vercel/
 __pycache__/
+node_modules/
+.env
+.env.*
+!.env.example

@@ -1,0 +1,11 @@
+{
+  "name": "elm-bloom",
+  "private": true,
+  "scripts": {
+    "dev": "node dev-server.js",
+    "build": "python build.py"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}

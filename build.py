@@ -7,6 +7,7 @@ dist/. Put them in fonts/ (that folder is never deployed). Without them the
 page falls back to IBM Plex Sans Arabic.
 """
 import base64
+import json
 import re
 import shutil
 from pathlib import Path
@@ -52,19 +53,34 @@ def font_faces():
     return faces
 
 
-def main():
-    html = (ROOT / "index.html").read_text(encoding="utf-8")
-    faces = font_faces()
+def bake(name, faces):
+    html = (ROOT / name).read_text(encoding="utf-8")
     if faces:
         html = html.replace("/*@FONTS*/", "\n".join(faces))
         html = re.sub(r"<!--@FALLBACK-->.*?<!--/@FALLBACK-->\n?", "", html, flags=re.S)
-    else:
+    return html
+
+
+def main():
+    faces = font_faces()
+    if not faces:
         print("  fonts/ has no Thmanyah files; using IBM Plex Sans Arabic")
     if DIST.exists():
         shutil.rmtree(DIST)
     (DIST / "assets").mkdir(parents=True)
-    (DIST / "index.html").write_text(html, encoding="utf-8")
+    (DIST / "index.html").write_text(bake("index.html", faces), encoding="utf-8")
     shutil.copy(ROOT / "assets" / "detail-logo.png", DIST / "assets" / "detail-logo.png")
+    (DIST / "admin.html").write_text(bake("admin.html", faces), encoding="utf-8")
+    for folder in ("api", "lib"):
+        target = DIST / folder
+        target.mkdir(parents=True)
+        for src in (ROOT / folder).glob("*.js"):
+            shutil.copy(src, target / src.name)
+    pkg = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
+    (DIST / "package.json").write_text(
+        json.dumps({"private": True, "dependencies": pkg["dependencies"]}, indent=2) + "\n",
+        encoding="utf-8",
+    )
     size = (DIST / "index.html").stat().st_size / 1024
     print(f"dist/index.html {size:.0f} KB")
 
