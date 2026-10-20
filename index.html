@@ -96,8 +96,14 @@ h2.q{font-size:25px;line-height:1.35}
 .booth{display:grid;gap:2px;margin-top:10px;padding:16px 18px;border-radius:16px;background:var(--rose);color:var(--white)}
 .booth b{font-size:18px;font-weight:700}
 .booth span{font-size:14px;opacity:.95}
-.sponsor{display:grid;justify-items:center;padding:22px 20px}
-.sponsor img{display:block;width:210px;height:auto}
+.sponsor{display:grid;gap:14px;padding:20px 18px 18px}
+.sponsor p{font-size:17px;font-weight:500;line-height:1.75}
+.phone{display:flex;gap:8px}
+.phone input{flex:1;min-width:0;border:0;background:var(--tint);border-radius:14px;padding:14px;font-size:17px;font-weight:500;letter-spacing:.02em}
+.phone button{flex:none;border:0;border-radius:14px;background:var(--rose);color:var(--white);font-weight:700;padding:0 18px}
+.sponsor .note{font-size:16px;font-weight:700}
+.sponsor .bad{font-size:14px;font-weight:700}
+.sponsor img{display:block;width:112px;height:auto;justify-self:center;margin-top:2px}
 
 .shift-in .result{animation:rise .55s cubic-bezier(.3,1.2,.5,1) both}
 .shift-in .result .emoji{animation:bloom .6s .2s cubic-bezier(.3,1.4,.5,1) both}
@@ -162,6 +168,13 @@ h2.q{font-size:25px;line-height:1.35}
         </div>
       </div>
       <aside class="card sponsor">
+        <p id="reachAsk"></p>
+        <form class="phone" id="phoneForm">
+          <input id="phone" type="tel" inputmode="numeric" autocomplete="tel" dir="ltr" maxlength="16" placeholder="05xxxxxxxx" aria-label="رقم الجوال">
+          <button type="submit">أرسل</button>
+        </form>
+        <p class="note" id="reachOk" hidden>وصلنا رقمك.</p>
+        <p class="bad" id="reachErr" hidden>اكتبي رقم جوال سعودي، مثل 05xxxxxxxx</p>
         <img src="assets/detail-logo.png" width="640" height="233" alt="ديتيل للحلول التسويقية">
       </aside>
       <button class="again" id="againBtn" type="button">ابدأ من جديد</button>
@@ -208,16 +221,22 @@ h2.q{font-size:25px;line-height:1.35}
 
   var RESULTS = {
     A:{name:"محققة الباقات", emoji:"🔍🌹",
+       ask:"إذا ودك أثر الموسم الجاي يوصلك قبل الناس. حطي رقمك.",
        desc:"ما يمر عليها بوكيه مرور الكرام! تحلل لون الورد، وعدد الورود، ومعنى البطاقة، وتحاول تكتشف الرسالة المخفية وراء كل هدية."},
     B:{name:"ملكة التلميحات", emoji:"🎀",
+       ask:"إذا ودك تلميح الموسم الجاي، قبل الكل. حطي رقمك.",
        desc:"ما تطلب الورد بشكل مباشر أبدًا، لكن تعرف كيف توصل الرسالة. صورة، ستوري، أو تعليق عابر… والباقي على الشاطر!"},
     C:{name:"رسولة الاعترافات", emoji:"💘",
+       ask:"إذا ودك كلام الموسم الجاي، قبل ما ينقال. حطي رقمك.",
        desc:"إذا عجزت الكلمات عن التعبير، تخلي الورد يتكلم عنها. تحب الرسائل الرومانسية والهدايا اللي تحمل معاني خفية."},
     D:{name:"حافظة الأسرار", emoji:"🤫",
+       ask:"إذا ودك سر الموسم الجاي يوصلك أول. حطي رقمك.",
        desc:"عندها قصة وراء كل وردة، وبعض القصص ما يعرفها أحد. تحب المعاني الخفية والرسائل اللي ما يفهمها إلا أصحابها."},
     E:{name:"صانعة المفاجآت", emoji:"🎁",
+       ask:"إذا ودك مفاجأة الموسم الجاي، قبل لا تنزل. حطي رقمك.",
        desc:"تحب تهدي الورد بدون مناسبة، وتستمتع بردة فعل الشخص أكثر من الهدية نفسها. تؤمن أن أجمل اللحظات هي اللي تجي بدون موعد."},
     F:{name:"مدللة نفسها", emoji:"💐",
+       ask:"إذا ودك خبر الموسم الجاي لك قبل الكل. حطي رقمك.",
        desc:"ما تنتظر أحد يهديها الورد؛ تشتريه لنفسها وتكافئ نفسها على أبسط إنجاز. تعرف كيف تسعد نفسها بنفسها."}
   };
 
@@ -339,12 +358,51 @@ h2.q{font-size:25px;line-height:1.35}
     $("rEmoji").textContent = R.emoji;
     $("rName").textContent = R.name;
     $("rDesc").textContent = R.desc;
+    $("reachAsk").textContent = R.ask;
+    var saved = load();
+    var sent = !!(saved && saved.phoned);
+    $("phoneForm").hidden = sent;
+    $("reachOk").hidden = !sent;
+    $("reachErr").hidden = true;
     var sec = $("sResult");
     sec.classList.remove("shift-in");
     if(animate){ void sec.offsetWidth; sec.classList.add("shift-in"); }
     show("sResult");
     $("rName").focus();
   }
+
+  function saudiMobile(raw){
+    var d = String(raw).replace(/[٠-٩]/g, function(ch){ return String("٠١٢٣٤٥٦٧٨٩".indexOf(ch)); }).replace(/\D/g, "");
+    if(d.indexOf("00966") === 0) d = d.slice(5);
+    else if(d.indexOf("966") === 0) d = d.slice(3);
+    if(d.length === 9 && d.charAt(0) === "5") d = "0" + d;
+    return /^05\d{8}$/.test(d) ? d : "";
+  }
+
+  $("phoneForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var saved = load();
+    var phone = saudiMobile($("phone").value);
+    if(!phone || !saved || !saved.id){ $("reachErr").hidden = false; return; }
+    $("reachErr").hidden = true;
+    var btn = $("phoneForm").querySelector("button");
+    btn.disabled = true;
+    function send(left){
+      return fetch("/api/phone", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id: saved.id, phone: phone })
+      }).then(function(r){
+        if(r.status === 404 && left) return new Promise(function(done){ setTimeout(function(){ done(send(left - 1)); }, 700); });
+        if(!r.ok) throw new Error("phone");
+        saved.phoned = true;
+        save(saved);
+        $("phoneForm").hidden = true;
+        $("reachOk").hidden = false;
+      });
+    }
+    send(2).catch(function(){ $("reachErr").hidden = false; btn.disabled = false; });
+  });
 
   $("startBtn").addEventListener("click", function(){
     fresh(); show("sQuiz"); renderQ(true);

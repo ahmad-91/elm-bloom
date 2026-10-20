@@ -43,7 +43,7 @@ module.exports = async function stats(req, res) {
   try {
     await ready();
     const pool = getPool();
-    const [total, byType, byDay] = await Promise.all([
+    const [total, byType, byDay, phones] = await Promise.all([
       pool.query("SELECT count(*)::int AS n FROM completions"),
       pool.query("SELECT personality, count(*)::int AS n FROM completions GROUP BY personality"),
       pool.query(`
@@ -52,8 +52,18 @@ module.exports = async function stats(req, res) {
         FROM completions
         GROUP BY 1
       `),
+      pool.query(`
+        SELECT phone, personality,
+               to_char((created_at AT TIME ZONE 'Asia/Riyadh')::date, 'YYYY-MM-DD') AS day
+        FROM completions
+        WHERE phone IS NOT NULL
+        ORDER BY created_at DESC
+        LIMIT 100
+      `),
     ]);
 
+    const names = {};
+    TYPES.forEach(([id, name]) => { names[id] = name; });
     const counts = {};
     byType.rows.forEach((row) => { counts[row.personality] = row.n; });
     const days = {};
@@ -70,6 +80,11 @@ module.exports = async function stats(req, res) {
         const date = riyadhDay(WINDOW - 1 - i);
         return { date, count: days[date] || 0 };
       }),
+      phones: phones.rows.map((row) => ({
+        phone: row.phone,
+        name: names[row.personality] || row.personality,
+        date: row.day,
+      })),
     });
   } catch (err) {
     console.error(err);

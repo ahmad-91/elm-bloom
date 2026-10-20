@@ -33,6 +33,7 @@ function ready() {
         created_at timestamptz NOT NULL DEFAULT now()
       );
       CREATE INDEX IF NOT EXISTS completions_created_at_idx ON completions (created_at);
+      ALTER TABLE completions ADD COLUMN IF NOT EXISTS phone text;
     `);
   }
   return schemaReady;

@@ -15,6 +15,7 @@ function loadEnv() {
 loadEnv();
 
 const complete = require("./api/complete");
+const phone = require("./api/phone");
 const stats = require("./api/stats");
 const DIST = path.join(__dirname, "dist");
 const PORT = Number(process.env.PORT || 8787);
@@ -57,7 +58,8 @@ function serveStatic(req, res) {
 
 const server = http.createServer(async (req, res) => {
   const url = req.url.split("?")[0];
-  if (url === "/api/complete" || url === "/api/stats") {
+  const routes = { "/api/complete": complete, "/api/phone": phone, "/api/stats": stats };
+  if (routes[url]) {
     const chunks = [];
     for await (const chunk of req) chunks.push(chunk);
     const raw = Buffer.concat(chunks).toString("utf8");
@@ -68,7 +70,7 @@ const server = http.createServer(async (req, res) => {
     }
     wrap(res);
     try {
-      await (url === "/api/complete" ? complete : stats)(req, res);
+      await routes[url](req, res);
     } catch (err) {
       console.error(err);
       if (!res.headersSent) res.writeHead(500);
