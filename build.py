@@ -81,6 +81,10 @@ def main():
         json.dumps({"private": True, "dependencies": pkg["dependencies"]}, indent=2) + "\n",
         encoding="utf-8",
     )
+    (DIST / "vercel.json").write_text(
+        json.dumps({"cleanUrls": True}, indent=2) + "\n",
+        encoding="utf-8",
+    )
     size = (DIST / "index.html").stat().st_size / 1024
     print(f"dist/index.html {size:.0f} KB")
 
