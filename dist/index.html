@@ -73,14 +73,15 @@ button{font:inherit;color:inherit}
 .pattern i.d{width:12px;height:12px;border-radius:50%;background:currentColor}
 .pattern svg{display:block;width:100%;height:100%}
 .count{font-size:14px;font-weight:700;color:var(--blush);font-variant-numeric:tabular-nums}
-h2.q{font-size:25px}
+h2.q{font-size:25px;line-height:1.35;min-height:calc(1.35em * 3)}
 .options{display:grid;gap:10px}
-.opt{text-align:right;font-size:17px;font-weight:500;line-height:1.55;padding:15px 18px;border:1.5px solid var(--tint);border-radius:16px;background:var(--tint);color:var(--rose);cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .15s}
+.opt{display:flex;align-items:center;text-align:right;font-size:17px;font-weight:500;line-height:1.55;min-height:84px;padding:15px 18px;border:1.5px solid var(--tint);border-radius:16px;background:var(--tint);color:var(--rose);cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .15s}
 .opt:hover{border-color:var(--blush)}
 .opt:active{transform:scale(.99)}
 .opt.picked{background:var(--rose);border-color:var(--rose);color:var(--white);font-weight:700}
 .back{justify-self:start;font-size:15px;font-weight:500;color:var(--blush);background:none;border:0;padding:4px 0;cursor:pointer}
 .back:disabled{visibility:hidden}
+.again{justify-self:center;font-size:15px;font-weight:500;color:var(--white);background:none;border:0;padding:4px 8px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
 
 /* النتيجة: بطاقة واحدة لكل الشخصيات */
 .result{display:grid;gap:10px;padding-bottom:22px}
@@ -93,10 +94,8 @@ h2.q{font-size:25px}
 .booth{display:grid;gap:2px;margin-top:10px;padding:16px 18px;border-radius:16px;background:var(--rose);color:var(--white)}
 .booth b{font-size:18px;font-weight:700}
 .booth span{font-size:14px;opacity:.95}
-.sponsor{display:grid;justify-items:center;gap:10px;padding:20px 20px 18px;text-align:center}
-.sponsor small{font-family:var(--display);font-size:13px;letter-spacing:.04em;color:var(--blush)}
-.sponsor img{display:block;width:170px;height:auto}
-.sponsor p{font-size:16px;font-weight:700;color:#1d1a9c}
+.sponsor{display:grid;justify-items:center;padding:22px 20px}
+.sponsor img{display:block;width:210px;height:auto}
 
 .shift-in .result{animation:rise .55s cubic-bezier(.3,1.2,.5,1) both}
 .shift-in .result .emoji{animation:bloom .6s .2s cubic-bezier(.3,1.4,.5,1) both}
@@ -130,7 +129,7 @@ h2.q{font-size:25px}
       </div>
       <div class="card intro-card">
         <h1>وش شخصيتك في موسم الورد؟</h1>
-        <p>اللي ما يتقال، يقوله الورد.</p>
+        <p>اللي ما ينقال، يقوله الورد.</p>
         <button class="primary" id="startBtn" type="button">ابدئي</button>
       </div>
     </section>
@@ -160,11 +159,10 @@ h2.q{font-size:25px}
           <span>وخذي هديتك اللي تناسب شخصيتك</span>
         </div>
       </div>
-      <aside class="card sponsor" aria-label="الراعي الرسمي">
-        <small>الراعي الرسمي</small>
+      <aside class="card sponsor">
         <img src="assets/detail-logo.png" width="640" height="233" alt="ديتيل للحلول التسويقية">
-        <p>ديتيل فريق تحطه على يمناك</p>
       </aside>
+      <button class="again" id="againBtn" type="button">ابدأ من جديد</button>
     </section>
   </main>
 </div>
@@ -325,6 +323,10 @@ h2.q{font-size:25px}
 
   $("startBtn").addEventListener("click", function(){
     fresh(); show("sQuiz"); renderQ(true);
+  });
+
+  $("againBtn").addEventListener("click", function(){
+    clear(); fresh(); show("sIntro"); $("startBtn").focus();
   });
 
   // إعادة التشغيل للفريق فقط: ضغطة مطوّلة على الشعار ثلاث ثوانٍ.
