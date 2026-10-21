@@ -85,7 +85,8 @@ h2.q{font-size:25px;line-height:1.35}
 
 /* النتيجة: الرسم يطلع فوق البطاقة، والنص يبقى داخلها */
 #sResult{gap:16px}
-.portrait{width:min(236px,72%);height:auto;justify-self:center;margin-bottom:-64px;position:relative;z-index:2;filter:drop-shadow(0 14px 18px rgba(89,42,44,.16))}
+.portrait-wrap{width:min(236px,72%);justify-self:center;margin-bottom:-64px;position:relative;z-index:2;animation:drift 6.5s ease-in-out infinite}
+.portrait{display:block;width:100%;height:auto;filter:drop-shadow(0 14px 18px rgba(89,42,44,.16))}
 .result{display:grid;gap:10px;padding-top:78px;padding-bottom:22px;position:relative;z-index:1}
 .result .deco{position:absolute;width:200px;inset-inline-end:-50px;top:-40px;color:var(--blush);opacity:.55;pointer-events:none}
 .result .deco svg{display:block;width:100%;height:auto}
@@ -98,10 +99,11 @@ h2.q{font-size:25px;line-height:1.35}
 .foot{display:flex;justify-content:center;padding:2px 0 0}
 .foot img{display:block;width:86px;height:auto}
 
-.shift-in .portrait{animation:bloom .7s cubic-bezier(.3,1.35,.5,1) both}
+.shift-in .portrait{animation:bloom 1s cubic-bezier(.16,1,.3,1) both}
 .shift-in .result{animation:rise .55s .05s cubic-bezier(.3,1.2,.5,1) both}
 @keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
-@keyframes bloom{from{transform:translateY(10px) scale(.92);opacity:0}to{transform:none;opacity:1}}
+@keyframes bloom{from{opacity:0;transform:translateY(26px) scale(.86) rotate(-3deg)}to{opacity:1;transform:none}}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(.6deg)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -148,7 +150,9 @@ h2.q{font-size:25px;line-height:1.35}
     </section>
 
     <section class="screen" id="sResult" hidden>
-      <img class="portrait" id="rArt" alt="" width="626" height="626">
+      <div class="portrait-wrap">
+        <img class="portrait" id="rArt" alt="" width="626" height="626">
+      </div>
       <div class="card result" id="rCard">
         <i class="deco" id="rDeco" aria-hidden="true"></i>
         <span class="kicker">شخصيتك في موسم الورد</span>
