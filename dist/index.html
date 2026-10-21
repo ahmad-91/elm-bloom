@@ -83,32 +83,25 @@ h2.q{font-size:25px;line-height:1.35}
 .back:disabled{visibility:hidden}
 .again{justify-self:center;font-size:15px;font-weight:500;color:var(--white);background:none;border:0;padding:4px 8px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
 
-/* النتيجة: بطاقة واحدة لكل الشخصيات */
-.result{display:grid;gap:10px;padding-bottom:22px}
+/* النتيجة: الرسم يطلع فوق البطاقة، والنص يبقى داخلها */
+#sResult{gap:16px}
+.portrait{width:min(236px,72%);height:auto;justify-self:center;margin-bottom:-64px;position:relative;z-index:2;filter:drop-shadow(0 14px 18px rgba(89,42,44,.16))}
+.result{display:grid;gap:10px;padding-top:78px;padding-bottom:22px;position:relative;z-index:1}
 .result .deco{position:absolute;width:200px;inset-inline-end:-50px;top:-40px;color:var(--blush);opacity:.55;pointer-events:none}
 .result .deco svg{display:block;width:100%;height:auto}
 .kicker{font-family:var(--display);font-size:15px;color:var(--blush)}
-.result .emoji{font-size:44px;line-height:1;justify-self:start}
 .result h1{font-size:38px}
 .result p{font-size:18px;font-weight:500;line-height:1.8}
 .booth{display:grid;gap:2px;margin-top:10px;padding:16px 18px;border-radius:16px;background:var(--rose);color:var(--white)}
 .booth b{font-size:18px;font-weight:700}
 .booth span{font-size:14px;opacity:.95}
-.sponsor{display:grid;gap:14px;padding:20px 18px 18px}
-.sponsor p{font-size:17px;font-weight:500;line-height:1.75}
-.phone{display:flex;gap:8px}
-.phone input{flex:1;min-width:0;border:0;background:var(--tint);border-radius:14px;padding:14px;font-size:17px;font-weight:500;letter-spacing:.02em}
-.phone button{flex:none;border:0;border-radius:14px;background:var(--rose);color:var(--white);font-weight:700;padding:0 18px}
-.sponsor .note{font-size:16px;font-weight:700}
-.sponsor .bad{font-size:14px;font-weight:700}
-.foot{display:flex;justify-content:center;padding:8px 0 4px}
+.foot{display:flex;justify-content:center;padding:2px 0 0}
 .foot img{display:block;width:86px;height:auto}
 
-.shift-in .result{animation:rise .55s cubic-bezier(.3,1.2,.5,1) both}
-.shift-in .result .emoji{animation:bloom .6s .2s cubic-bezier(.3,1.4,.5,1) both}
-.shift-in .sponsor{animation:rise .5s .35s ease-out both}
+.shift-in .portrait{animation:bloom .7s cubic-bezier(.3,1.35,.5,1) both}
+.shift-in .result{animation:rise .55s .05s cubic-bezier(.3,1.2,.5,1) both}
 @keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
-@keyframes bloom{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+@keyframes bloom{from{transform:translateY(10px) scale(.92);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -155,10 +148,10 @@ h2.q{font-size:25px;line-height:1.35}
     </section>
 
     <section class="screen" id="sResult" hidden>
+      <img class="portrait" id="rArt" alt="" width="626" height="626">
       <div class="card result" id="rCard">
         <i class="deco" id="rDeco" aria-hidden="true"></i>
         <span class="kicker">شخصيتك في موسم الورد</span>
-        <span class="emoji" id="rEmoji" aria-hidden="true"></span>
         <h1 class="focus-target" id="rName" tabindex="-1"></h1>
         <p id="rDesc"></p>
         <div class="booth">
@@ -166,15 +159,6 @@ h2.q{font-size:25px;line-height:1.35}
           <span>وخذي هديتك اللي تناسب شخصيتك</span>
         </div>
       </div>
-      <aside class="card sponsor">
-        <p id="reachAsk"></p>
-        <form class="phone" id="phoneForm">
-          <input id="phone" type="tel" inputmode="numeric" autocomplete="tel" dir="ltr" maxlength="16" placeholder="05xxxxxxxx" aria-label="رقم الجوال">
-          <button type="submit">أرسل</button>
-        </form>
-        <p class="note" id="reachOk" hidden>وصلنا رقمك.</p>
-        <p class="bad" id="reachErr" hidden>اكتبي رقم جوال سعودي، مثل 05xxxxxxxx</p>
-      </aside>
       <footer class="foot">
         <img src="assets/detail-logo-white.png" width="660" height="239" alt="ديتيل للحلول التسويقية">
       </footer>
@@ -221,23 +205,17 @@ h2.q{font-size:25px;line-height:1.35}
   ];
 
   var RESULTS = {
-    A:{name:"محققة الباقات", emoji:"🔍🌹",
-       ask:"إذا ودك أثر الموسم الجاي يوصلك قبل الناس.",
+    A:{name:"محققة الباقات", emoji:"🔍🌹", art:"assets/glyphs/a.png",
        desc:"ما يمر عليها بوكيه مرور الكرام! تحلل لون الورد، وعدد الورود، ومعنى البطاقة، وتحاول تكتشف الرسالة المخفية وراء كل هدية."},
-    B:{name:"ملكة التلميحات", emoji:"🎀",
-       ask:"إذا ودك تلميح الموسم الجاي، قبل الكل.",
+    B:{name:"ملكة التلميحات", emoji:"🎀", art:"assets/glyphs/b.png",
        desc:"ما تطلب الورد بشكل مباشر أبدًا، لكن تعرف كيف توصل الرسالة. صورة، ستوري، أو تعليق عابر… والباقي على الشاطر!"},
-    C:{name:"رسولة الاعترافات", emoji:"💘",
-       ask:"إذا ودك كلام الموسم الجاي، قبل ما ينقال.",
+    C:{name:"رسولة الاعترافات", emoji:"💘", art:"assets/glyphs/c.png",
        desc:"إذا عجزت الكلمات عن التعبير، تخلي الورد يتكلم عنها. تحب الرسائل الرومانسية والهدايا اللي تحمل معاني خفية."},
-    D:{name:"حافظة الأسرار", emoji:"🤫",
-       ask:"إذا ودك سر الموسم الجاي يوصلك أول.",
+    D:{name:"حافظة الأسرار", emoji:"🤫", art:"assets/glyphs/d.png",
        desc:"عندها قصة وراء كل وردة، وبعض القصص ما يعرفها أحد. تحب المعاني الخفية والرسائل اللي ما يفهمها إلا أصحابها."},
-    E:{name:"صانعة المفاجآت", emoji:"🎁",
-       ask:"إذا ودك مفاجأة الموسم الجاي، قبل لا تنزل.",
+    E:{name:"صانعة المفاجآت", emoji:"🎁", art:"assets/glyphs/e.png",
        desc:"تحب تهدي الورد بدون مناسبة، وتستمتع بردة فعل الشخص أكثر من الهدية نفسها. تؤمن أن أجمل اللحظات هي اللي تجي بدون موعد."},
-    F:{name:"مدللة نفسها", emoji:"💐",
-       ask:"إذا ودك خبر الموسم الجاي لك قبل الكل.",
+    F:{name:"مدللة نفسها", emoji:"💐", art:"assets/glyphs/f.png",
        desc:"ما تنتظر أحد يهديها الورد؛ تشتريه لنفسها وتكافئ نفسها على أبسط إنجاز. تعرف كيف تسعد نفسها بنفسها."}
   };
 
@@ -356,54 +334,15 @@ h2.q{font-size:25px;line-height:1.35}
 
   function showResult(type, animate){
     var R = RESULTS[type];
-    $("rEmoji").textContent = R.emoji;
+    $("rArt").src = R.art;
     $("rName").textContent = R.name;
     $("rDesc").textContent = R.desc;
-    $("reachAsk").textContent = R.ask;
-    var saved = load();
-    var sent = !!(saved && saved.phoned);
-    $("phoneForm").hidden = sent;
-    $("reachOk").hidden = !sent;
-    $("reachErr").hidden = true;
     var sec = $("sResult");
     sec.classList.remove("shift-in");
     if(animate){ void sec.offsetWidth; sec.classList.add("shift-in"); }
     show("sResult");
     $("rName").focus();
   }
-
-  function saudiMobile(raw){
-    var d = String(raw).replace(/[٠-٩]/g, function(ch){ return String("٠١٢٣٤٥٦٧٨٩".indexOf(ch)); }).replace(/\D/g, "");
-    if(d.indexOf("00966") === 0) d = d.slice(5);
-    else if(d.indexOf("966") === 0) d = d.slice(3);
-    if(d.length === 9 && d.charAt(0) === "5") d = "0" + d;
-    return /^05\d{8}$/.test(d) ? d : "";
-  }
-
-  $("phoneForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    var saved = load();
-    var phone = saudiMobile($("phone").value);
-    if(!phone || !saved || !saved.id){ $("reachErr").hidden = false; return; }
-    $("reachErr").hidden = true;
-    var btn = $("phoneForm").querySelector("button");
-    btn.disabled = true;
-    function send(left){
-      return fetch("/api/phone", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ id: saved.id, phone: phone })
-      }).then(function(r){
-        if(r.status === 404 && left) return new Promise(function(done){ setTimeout(function(){ done(send(left - 1)); }, 700); });
-        if(!r.ok) throw new Error("phone");
-        saved.phoned = true;
-        save(saved);
-        $("phoneForm").hidden = true;
-        $("reachOk").hidden = false;
-      });
-    }
-    send(2).catch(function(){ $("reachErr").hidden = false; btn.disabled = false; });
-  });
 
   $("startBtn").addEventListener("click", function(){
     fresh(); show("sQuiz"); renderQ(true);

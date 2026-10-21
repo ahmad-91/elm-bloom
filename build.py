@@ -70,6 +70,10 @@ def main():
     (DIST / "assets").mkdir(parents=True)
     (DIST / "index.html").write_text(bake("index.html", faces), encoding="utf-8")
     shutil.copy(ROOT / "assets" / "detail-logo-white.png", DIST / "assets" / "detail-logo-white.png")
+    glyphs = DIST / "assets" / "glyphs"
+    glyphs.mkdir()
+    for src in (ROOT / "assets" / "glyphs").glob("*.png"):
+        shutil.copy(src, glyphs / src.name)
     (DIST / "admin.html").write_text(bake("admin.html", faces), encoding="utf-8")
     for folder in ("api", "lib"):
         target = DIST / folder
