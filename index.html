@@ -66,7 +66,7 @@ button{font:inherit;color:inherit}
 .primary:active{transform:scale(.985)}
 
 /* الأسئلة. مؤشر التقدم من نقشة الموسم: بتلة، دائرة، بتلة */
-.quiz-card{display:grid;gap:20px;align-content:start;min-height:640px}
+.quiz-card{display:grid;gap:20px;align-content:start;min-height:600px}
 .progress{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .pattern{display:flex;align-items:center;gap:9px}
 .pattern i{display:block;color:var(--blush);opacity:.4;transition:opacity .3s,color .3s}
@@ -77,7 +77,7 @@ button{font:inherit;color:inherit}
 .count{font-size:14px;font-weight:700;color:var(--blush);font-variant-numeric:tabular-nums}
 h2.q{font-size:25px;line-height:1.35}
 .options{display:grid;gap:10px}
-.opt{display:flex;align-items:center;text-align:right;font-size:17px;font-weight:500;line-height:1.55;min-height:84px;padding:15px 18px;border:1.5px solid var(--tint);border-radius:16px;background:var(--tint);color:var(--rose);cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .15s}
+.opt{display:flex;align-items:center;text-align:right;font-size:17px;font-weight:500;line-height:1.45;min-height:52px;padding:8px 16px;border:1.5px solid var(--tint);border-radius:16px;background:var(--tint);color:var(--rose);cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .15s}
 .opt:hover{border-color:var(--blush)}
 .opt:active{transform:scale(.99)}
 .opt.picked{background:var(--rose);border-color:var(--rose);color:var(--white);font-weight:700}
@@ -176,38 +176,50 @@ h2.q{font-size:25px;line-height:1.35}
 <script>
 (function(){
   // A محققة الباقات · B ملكة التلميحات · C رسولة الاعترافات · D حافظة الأسرار · E صانعة المفاجآت · F مدللة نفسها
-  // كل شخصية تظهر في أربعة أسئلة بالضبط، فتكون فرصها متساوية.
+  // كل سؤال فيه الخيارات الستة مرة واحدة، ففرص الشخصيات متساوية.
   var QUESTIONS = [
-    {q:"قهوتك وصلت ومعها وردة على الصينية… وش تسوين فيها؟", o:[
-      ["أحطها بين صفحات كتابي، وأنا أعرف ليش.","D"],
-      ["أعطيها اللي جالسة على الطاولة اللي جنبي.","E"],
-      ["أطلب معها حلا، اليوم يومي.","F"],
-      ["أصورها وأرسلها لشخص واحد بدون ولا كلمة.","C"]]},
-    {q:"وصلك بوكيه بدون اسم المرسل… وش أول حركة؟", o:[
-      ["أقارن خط الكرت بخطوط الشلة كلها.","A"],
-      ["أنزله ستوري وأراقب مين يشوفه أول.","B"],
-      ["أطلع أرسل بوكيه لشخص ما يتوقعه.","E"],
-      ["ما يهمني مين، أحطه جنب سريري وأستمتع فيه.","F"]]},
-    {q:"الكرت فاضي والقلم بيدك… وش تكتبين؟", o:[
-      ["«توقّع مين أنا؟ عندك ثلاث محاولات».","A"],
-      ["«ترى عيد ميلادي بعد أسبوعين».","B"],
-      ["«في كلام ما يكفيه كرت».","C"],
-      ["«تذكر؟»","D"]]},
-    {q:"وش أحلى توقيت للورد؟", o:[
-      ["بعد أسبوع كامل من التلميح.","B"],
-      ["اللحظة اللي ما أقدر أقول فيها اللي بخاطري.","C"],
-      ["يوم ثلاثاء عادي، بدون أي سبب.","E"],
-      ["بعد ما أخلص مهمة صعبة، وأنا اللي أشتريه.","F"]]},
-    {q:"اختاري عنوان فيلم عن علاقتك بالورد.", o:[
-      ["القضية: من أرسل البوكيه؟","A"],
-      ["رسالة بين البتلات","C"],
-      ["ما يعرفها غيرنا","D"],
-      ["موعد مع نفسي","F"]]},
-    {q:"وش في جوالك له علاقة بالورد؟", o:[
-      ["سكرين شوت لبوكيه أحد، مكبّرة على الكرت.","A"],
-      ["صور ورد في المفضلة، أرسلها «بالصدفة».","B"],
-      ["صورة وردة قديمة، محد يعرف قصتها.","D"],
-      ["رقم محل ورد محفوظ باسم «طوارئ».","E"]]}
+    {q:"جاك بوكيه ورد، وش أول شيء تسويه؟", o:[
+      ["أحلل تفاصيله","A"],
+      ["ألمّح إني أبيه","B"],
+      ["أقرأ رسالته","C"],
+      ["أخليه سرّي","D"],
+      ["أهدي غيري مثله","E"],
+      ["أشتريه لنفسي","F"]]},
+    {q:"وش يلفت انتباهك بالورد؟", o:[
+      ["التفاصيل","A"],
+      ["التلميحات","B"],
+      ["الرسالة","C"],
+      ["المعنى","D"],
+      ["المفاجأة","E"],
+      ["الهدية لنفسي","F"]]},
+    {q:"إذا بتطلب ورد، كيف؟", o:[
+      ["أحدد كل شيء","A"],
+      ["ألمّح وبس","B"],
+      ["أكتب رسالة","C"],
+      ["أخليها سرّ","D"],
+      ["أفاجئ غيري","E"],
+      ["أطلبه لنفسي","F"]]},
+    {q:"أجمل شيء بالبوكيه؟", o:[
+      ["تنسيقه","A"],
+      ["وصوله بدون طلب","B"],
+      ["كلامه","C"],
+      ["قصته","D"],
+      ["ردة الفعل","E"],
+      ["شعوري معه","F"]]},
+    {q:"أي لون يشبهك؟", o:[
+      ["🤍 أبيض","A"],
+      ["💗 وردي","B"],
+      ["❤️ أحمر","C"],
+      ["💜 بنفسجي","D"],
+      ["💛 أصفر","E"],
+      ["🧡 خوخي","F"]]},
+    {q:"وش أحلى مفاجأة؟", o:[
+      ["بوكيه بتفاصيل مميزة","A"],
+      ["أحد يفهم تلميحي","B"],
+      ["رسالة من القلب","C"],
+      ["سرّ بيننا","D"],
+      ["هدية بلا موعد","E"],
+      ["ورد لنفسي","F"]]}
   ];
 
   var RESULTS = {
@@ -330,8 +342,10 @@ h2.q{font-size:25px;line-height:1.35}
     var count = {};
     state.answers.forEach(function(t){ count[t] = (count[t] || 0) + 1; });
     var max = Math.max.apply(null, Object.keys(count).map(function(t){ return count[t]; }));
-    var tied = Object.keys(count).filter(function(t){ return count[t] === max; });
-    var winner = tied[Math.floor(Math.random() * tied.length)];
+    // عند التعادل تفوز أول إجابة ضمن الشخصيات الأعلى، بدءاً من السؤال الأول.
+    var tied = {};
+    Object.keys(count).forEach(function(t){ if(count[t] === max) tied[t] = true; });
+    var winner = state.answers.filter(function(t){ return tied[t]; })[0];
     var id = uid();
     save({t:winner, at:Date.now(), id:id});
     record(id, winner);
