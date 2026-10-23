@@ -249,7 +249,7 @@ h2.q{font-size:25px;line-height:1.35}
 
   var state, busy = false;
   function fresh(){
-    state = {idx:0, answers:new Array(N), order:QUESTIONS.map(function(Q){ return shuffled(Q.o); })};
+    state = {idx:0, answers:new Array(N), order:QUESTIONS.map(function(Q, i){ return i === N - 1 ? Q.o.slice() : shuffled(Q.o); })};
   }
 
   function show(id){
