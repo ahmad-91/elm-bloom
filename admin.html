@@ -38,6 +38,13 @@ button{cursor:pointer}
 .actions{display:flex;gap:8px}
 .actions button{background:transparent;color:var(--blush);border:1.5px solid rgba(202,158,157,.55);border-radius:999px;padding:8px 16px;font-weight:500}
 .actions button:hover{border-color:var(--blush);color:var(--white)}
+.reset{display:grid;gap:12px;background:var(--tint);border-radius:18px;padding:18px 18px 16px}
+.reset p{font-weight:500}
+.reset label{display:grid;gap:8px;font-weight:700}
+.reset input{border:0;background:var(--white);border-radius:14px;padding:14px 16px;font-weight:500}
+.reset-row{display:flex;gap:8px;align-items:center}
+.reset .go{border:0;background:var(--rose);color:var(--white);border-radius:14px;padding:12px 18px;font-weight:700}
+.reset .stop{background:transparent;border:0;padding:12px 8px;font-weight:500}
 
 #loginView{display:grid;justify-items:center;padding-top:7vh}
 .gate{width:min(420px,100%);background:var(--white);border-radius:22px;padding:28px 24px;display:grid;gap:16px}
@@ -111,6 +118,7 @@ button{cursor:pointer}
     </div>
     <span class="sr">ELM BLOOM</span>
     <div class="actions" id="actions" hidden>
+      <button id="resetOpen" type="button">إعادة ضبط</button>
       <button id="reload" type="button">تحديث</button>
       <button id="logout" type="button">خروج</button>
     </div>
@@ -170,6 +178,17 @@ button{cursor:pointer}
       <div id="phones"></div>
     </section>
     <p class="err" id="boardErr" hidden>ما قدرنا نقرأ الأرقام.</p>
+    <form class="reset" id="resetForm" hidden>
+      <p>الكلمة السرية مطلوبة لمسح كل نتائج الاختبار من قاعدة البيانات.</p>
+      <label>الكلمة السرية
+        <input id="resetSecret" type="password" autocomplete="off" required>
+      </label>
+      <p class="err" id="resetErr" hidden>الكلمة السرية غير صحيحة.</p>
+      <div class="reset-row">
+        <button class="go" id="resetGo" type="submit">مسح البيانات</button>
+        <button class="stop" id="resetCancel" type="button">إلغاء</button>
+      </div>
+    </form>
   </section>
 </div>
 <script>
@@ -196,6 +215,7 @@ button{cursor:pointer}
     $("board").hidden = true;
     $("actions").hidden = true;
     $("loginErr").hidden = !bad;
+    closeReset();
   }
 
   function render(data){
@@ -278,6 +298,47 @@ button{cursor:pointer}
     showLogin(false);
   });
   $("reload").addEventListener("click", load);
+  function closeReset(){
+    $("resetForm").hidden = true;
+    $("resetSecret").value = "";
+    $("resetErr").hidden = true;
+    $("resetGo").disabled = false;
+  }
+  $("resetOpen").addEventListener("click", function(){
+    $("resetForm").hidden = false;
+    $("resetErr").hidden = true;
+    $("resetSecret").value = "";
+    $("resetForm").scrollIntoView({ block: "nearest" });
+    $("resetSecret").focus();
+  });
+  $("resetCancel").addEventListener("click", closeReset);
+  $("resetForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var password = sessionStorage.getItem(KEY) || "";
+    var secret = $("resetSecret").value;
+    $("resetErr").hidden = true;
+    $("resetGo").disabled = true;
+    fetch("/api/reset", {
+      method: "POST",
+      headers: { authorization: "Bearer " + password, "content-type": "application/json" },
+      body: JSON.stringify({ secret: secret })
+    }).then(function(r){
+      $("resetGo").disabled = false;
+      if(r.status === 401){ sessionStorage.removeItem(KEY); showLogin(true); return null; }
+      if(r.status === 403){ $("resetErr").hidden = false; $("resetSecret").value = ""; $("resetSecret").focus(); return null; }
+      if(!r.ok) throw new Error("reset");
+      closeReset();
+      return fetch("/api/stats", { headers: { authorization: "Bearer " + password }, cache: "no-store" });
+    }).then(function(r){
+      if(!r) return null;
+      if(!r.ok) throw new Error("stats");
+      return r.json();
+    }).then(function(data){ if(data) render(data); })
+      .catch(function(){
+        $("resetGo").disabled = false;
+        $("boardErr").hidden = false;
+      });
+  });
   load();
 })();
 </script>

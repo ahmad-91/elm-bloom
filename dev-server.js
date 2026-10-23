@@ -17,6 +17,7 @@ loadEnv();
 const complete = require("./api/complete");
 const phone = require("./api/phone");
 const stats = require("./api/stats");
+const reset = require("./api/reset");
 const DIST = path.join(__dirname, "dist");
 const PORT = Number(process.env.PORT || 8787);
 const TYPES = {
@@ -58,7 +59,7 @@ function serveStatic(req, res) {
 
 const server = http.createServer(async (req, res) => {
   const url = req.url.split("?")[0];
-  const routes = { "/api/complete": complete, "/api/phone": phone, "/api/stats": stats };
+  const routes = { "/api/complete": complete, "/api/phone": phone, "/api/stats": stats, "/api/reset": reset };
   if (routes[url]) {
     const chunks = [];
     for await (const chunk of req) chunks.push(chunk);

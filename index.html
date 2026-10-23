@@ -68,12 +68,10 @@ button{font:inherit;color:inherit}
 /* الأسئلة. مؤشر التقدم من نقشة الموسم: بتلة، دائرة، بتلة */
 .quiz-card{display:grid;gap:20px;align-content:start;min-height:600px}
 .progress{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.pattern{display:flex;align-items:center;gap:9px}
-.pattern i{display:block;color:var(--blush);opacity:.4;transition:opacity .3s,color .3s}
-.pattern i.on{opacity:1;color:var(--rose)}
-.pattern i.p{width:18px;height:18px}
-.pattern i.d{width:12px;height:12px;border-radius:50%;background:currentColor}
-.pattern svg{display:block;width:100%;height:100%}
+.pattern{display:flex;align-items:center;gap:8px}
+.bloom{width:28px;height:28px;display:block}
+.bloom .base{fill:var(--blush);opacity:.4}
+.bloom .ink{fill:var(--rose)}
 .count{font-size:14px;font-weight:700;color:var(--blush);font-variant-numeric:tabular-nums}
 h2.q{font-size:25px;line-height:1.35}
 .options{display:grid;gap:10px}
@@ -176,50 +174,48 @@ h2.q{font-size:25px;line-height:1.35}
 <script>
 (function(){
   // A محققة الباقات · B ملكة التلميحات · C رسولة الاعترافات · D حافظة الأسرار · E صانعة المفاجآت · F مدللة نفسها
-  // كل سؤال فيه الخيارات الستة مرة واحدة، ففرص الشخصيات متساوية.
+  // الشخصية من السؤال الأول والسادس. عند التعادل يفصل لون السؤال الثاني.
+  // الأبيض A · الوردي B وF · الأحمر C وE · البنفسجي D
   var QUESTIONS = [
-    {q:"جاك بوكيه ورد، وش أول شيء تسويه؟", o:[
-      ["أحلل تفاصيله","A"],
-      ["ألمّح إني أبيه","B"],
-      ["أقرأ رسالته","C"],
-      ["أخليه سرّي","D"],
-      ["أهدي غيري مثله","E"],
-      ["أشتريه لنفسي","F"]]},
-    {q:"وش يلفت انتباهك بالورد؟", o:[
-      ["التفاصيل","A"],
-      ["التلميحات","B"],
-      ["الرسالة","C"],
-      ["المعنى","D"],
-      ["المفاجأة","E"],
-      ["الهدية لنفسي","F"]]},
-    {q:"إذا بتطلب ورد، كيف؟", o:[
-      ["أحدد كل شيء","A"],
-      ["ألمّح وبس","B"],
-      ["أكتب رسالة","C"],
-      ["أخليها سرّ","D"],
-      ["أفاجئ غيري","E"],
-      ["أطلبه لنفسي","F"]]},
-    {q:"أجمل شيء بالبوكيه؟", o:[
-      ["تنسيقه","A"],
-      ["وصوله بدون طلب","B"],
-      ["كلامه","C"],
-      ["قصته","D"],
-      ["ردة الفعل","E"],
-      ["شعوري معه","F"]]},
-    {q:"أي لون يشبهك؟", o:[
-      ["🤍 أبيض","A"],
-      ["💗 وردي","B"],
-      ["❤️ أحمر","C"],
-      ["💜 بنفسجي","D"],
-      ["💛 أصفر","E"],
-      ["🧡 خوخي","F"]]},
-    {q:"وش أحلى مفاجأة؟", o:[
-      ["بوكيه بتفاصيل مميزة","A"],
-      ["أحد يفهم تلميحي","B"],
-      ["رسالة من القلب","C"],
-      ["سرّ بيننا","D"],
-      ["هدية بلا موعد","E"],
-      ["ورد لنفسي","F"]]}
+    {q:"إذا أحد وصفك بالورد، وش تتوقع يقصد؟", o:[
+      ["عاطفية","C"],
+      ["ذوقي مميز","A"],
+      ["أحب المعاني","D"],
+      ["غامضة وملفتة","B"],
+      ["أحب المفاجآت","E"],
+      ["أدلع نفسي","F"]]},
+    {q:"أي لون ورد تفضّل؟", o:[
+      ["الأحمر","#CE"],
+      ["الوردي","#BF"],
+      ["الأبيض","#A"],
+      ["البنفسجي","#D"]]},
+    {q:"أي نوع باقات يعجبك؟", o:[
+      ["البسيطة"],
+      ["الفخمة"],
+      ["الملونة"],
+      ["الغريبة والمميزة"]]},
+    {q:"وين تحب تحط الورد؟", o:[
+      ["بغرفتي"],
+      ["بالصالة"],
+      ["على مكتبي"],
+      ["بأي مكان يجمّل الجو"]]},
+    {q:"وش أجمل وقت يوصلك فيه ورد؟", o:[
+      ["بمناسبة خاصة"],
+      ["بدون أي مناسبة"],
+      ["بعد يوم صعب"],
+      ["لما أكون محتاج فرحة"]]},
+    {q:"وش أقرب وصف لشخصيتك؟", o:[
+      ["أحب أكتشف التفاصيل","A"],
+      ["أفهم اللي بين السطور","B"],
+      ["أحب أعبر عن مشاعري","C"],
+      ["أحتفظ بأسراري","D"],
+      ["أحب أفاجئ غيري","E"],
+      ["أعرف كيف أسعد نفسي","F"]]},
+    {q:"كيف شفت موسم \u200EELM BLOOM\u200F؟", o:[
+      ["رهيب!"],
+      ["رهيب ورهيب ورهيب !"],
+      ["رهيب، وهم بعد رهيب، وآخر كلام رهيب!"],
+      ["جميع سبق ( ورهيب )"]]}
   ];
 
   var RESULTS = {
@@ -269,32 +265,118 @@ h2.q{font-size:25px;line-height:1.35}
     window.scrollTo(0, 0);
   }
 
-  // نقشة الموسم: بتلة، دائرة، بتلة… عنصر لكل سؤال
+  // نفس بتلات الهوية: وردتان بأربع ورقات. كل جواب يملأ ورقة و١/٧ من التالية.
+  var blooms = [];
   var bar = $("patternBar");
-  for(var p = 0; p < N; p++){
-    var i = document.createElement("i");
-    if(p % 2 === 0){ i.className = "p"; i.innerHTML = '<svg viewBox="347 374 319 319" fill="currentColor" data-petals></svg>'; }
-    else i.className = "d";
-    bar.appendChild(i);
+  var svgNS = "http://www.w3.org/2000/svg";
+  var petalSrc = document.getElementById("petals").querySelectorAll("path");
+  function makeFlower(flowerIndex){
+    var svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("class", "bloom");
+    svg.setAttribute("viewBox", "347 374 319 319");
+    var leaves = [];
+    Array.prototype.forEach.call(petalSrc, function(src, pi){
+      var base = src.cloneNode(true);
+      base.setAttribute("class", "base");
+      var ink = src.cloneNode(true);
+      ink.setAttribute("class", "ink");
+      var clip = document.createElementNS(svgNS, "clipPath");
+      var id = "bloom-c-" + flowerIndex + "-" + pi;
+      clip.setAttribute("id", id);
+      clip.setAttribute("clipPathUnits", "objectBoundingBox");
+      var rect = document.createElementNS(svgNS, "rect");
+      clip.appendChild(rect);
+      ink.setAttribute("clip-path", "url(#" + id + ")");
+      svg.appendChild(clip);
+      svg.appendChild(base);
+      svg.appendChild(ink);
+      leaves.push({rect:rect, path:base});
+    });
+    bar.appendChild(svg);
+    leaves.forEach(function(leaf){ blooms.push(leaf); });
   }
-  fillPetals(bar);
+  makeFlower(0);
+  makeFlower(1);
+
+  function worldBox(path){
+    var b = path.getBBox();
+    var m = path.transform.baseVal.consolidate().matrix;
+    var pts = [[b.x, b.y],[b.x + b.width, b.y],[b.x, b.y + b.height],[b.x + b.width, b.y + b.height]];
+    var xs = [], ys = [];
+    pts.forEach(function(p){
+      xs.push(m.a * p[0] + m.c * p[1] + m.e);
+      ys.push(m.b * p[0] + m.d * p[1] + m.f);
+    });
+    var x = Math.min.apply(null, xs), y = Math.min.apply(null, ys);
+    return {x:x, y:y, width:Math.max.apply(null, xs) - x, height:Math.max.apply(null, ys) - y};
+  }
+
+  function measureLeaves(){
+    for(var f = 0; f < 2; f++){
+      var group = blooms.slice(f * 4, f * 4 + 4);
+      var boxes = group.map(function(leaf){ return worldBox(leaf.path); });
+      if(!boxes[0].width) return;
+      var cx = 0, cy = 0;
+      boxes.forEach(function(b){ cx += b.x + b.width / 2; cy += b.y + b.height / 2; });
+      cx /= boxes.length; cy /= boxes.length;
+      group.forEach(function(leaf, i){
+        var b = boxes[i];
+        var mx = b.x + b.width / 2, my = b.y + b.height / 2;
+        leaf.box = b;
+        leaf.cx = cx; leaf.cy = cy;
+        // من الورقة العلوية، ثم مع عقارب الساعة: يمين، أسفل، يسار.
+        if(Math.abs(mx - cx) >= Math.abs(my - cy)) leaf.ord = mx >= cx ? 1 : 3;
+        else leaf.ord = my < cy ? 0 : 2;
+      });
+      group.sort(function(a, b){ return a.ord - b.ord; });
+      for(var i = 0; i < 4; i++) blooms[f * 4 + i] = group[i];
+    }
+  }
+
+  function paintBloom(){
+    measureLeaves();
+    if(!blooms[0].box) return;
+    var n = 0;
+    if(state && state.answers){
+      for(var k = 0; k < state.answers.length; k++) if(state.answers[k] != null) n++;
+    }
+    var filled = n * blooms.length / 7;
+    blooms.forEach(function(leaf, i){
+      var amount = Math.min(1, Math.max(0, filled - i));
+      var b = leaf.box;
+      var midX = b.x + b.width / 2;
+      var midY = b.y + b.height / 2;
+      var x = 0, y = 0, w = 1, h = 1;
+      if(Math.abs(midX - leaf.cx) >= Math.abs(midY - leaf.cy)){
+        w = amount;
+        if(midX < leaf.cx) x = 1 - amount;
+      } else {
+        h = amount;
+        if(midY < leaf.cy) y = 1 - amount;
+      }
+      leaf.rect.setAttribute("x", x);
+      leaf.rect.setAttribute("y", y);
+      leaf.rect.setAttribute("width", Math.max(0, w));
+      leaf.rect.setAttribute("height", Math.max(0, h));
+    });
+  }
 
   function renderQ(moveFocus){
     var i = state.idx;
     $("qNum").textContent = ar(i + 1);
     $("qTot").textContent = ar(N);
-    Array.prototype.forEach.call(bar.children, function(el, k){ el.classList.toggle("on", k <= i); });
     $("qText").textContent = QUESTIONS[i].q;
     $("qLive").textContent = "السؤال " + ar(i + 1) + " من " + ar(N);
     var box = $("qOpts"); box.innerHTML = "";
     state.order[i].forEach(function(opt){
       var b = document.createElement("button");
       b.type = "button"; b.className = "opt"; b.textContent = opt[0];
-      if(state.answers[i] === opt[1]) b.classList.add("picked");
-      b.addEventListener("click", function(){ pick(opt[1], b); });
+      if(state.answers[i] === (opt[1] || opt[0])) b.classList.add("picked");
+      b.addEventListener("click", function(){ pick(opt[1] || opt[0], b); });
       box.appendChild(b);
     });
     $("backBtn").disabled = (i === 0);
+    paintBloom();
     if(moveFocus) $("qText").focus();
   }
 
@@ -302,6 +384,7 @@ h2.q{font-size:25px;line-height:1.35}
     if(busy) return;
     busy = true;
     state.answers[state.idx] = type;
+    paintBloom();
     Array.prototype.forEach.call($("qOpts").children, function(c){ c.classList.remove("picked"); });
     el.classList.add("picked");
     $("backBtn").disabled = true;
@@ -340,12 +423,17 @@ h2.q{font-size:25px;line-height:1.35}
 
   function finish(){
     var count = {};
-    state.answers.forEach(function(t){ count[t] = (count[t] || 0) + 1; });
+    state.answers.forEach(function(t){ if(RESULTS[t]) count[t] = (count[t] || 0) + 1; });
     var max = Math.max.apply(null, Object.keys(count).map(function(t){ return count[t]; }));
-    // عند التعادل تفوز أول إجابة ضمن الشخصيات الأعلى، بدءاً من السؤال الأول.
     var tied = {};
     Object.keys(count).forEach(function(t){ if(count[t] === max) tied[t] = true; });
-    var winner = state.answers.filter(function(t){ return tied[t]; })[0];
+    var top = Object.keys(tied);
+    var winner = top[0];
+    if(top.length > 1){
+      var color = state.answers[1] || "";
+      var fromColor = top.filter(function(t){ return color.indexOf(t) !== -1; });
+      winner = fromColor.length === 1 ? fromColor[0] : state.answers.filter(function(t){ return tied[t]; })[0];
+    }
     var id = uid();
     save({t:winner, at:Date.now(), id:id});
     record(id, winner);
